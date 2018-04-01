@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 
-namespace 吉林大学马克思主义学院办公系统
+namespace Marx
 {
     class SQLHELPER
     {

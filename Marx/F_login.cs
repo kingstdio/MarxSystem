@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
 
-namespace 吉林大学马克思主义学院办公系统
+namespace Marx
 {
     public partial class F_login : DevComponents.DotNetBar.OfficeForm
     {

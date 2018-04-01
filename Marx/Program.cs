@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace 吉林大学马克思主义学院办公系统
+namespace Marx
 {
     static class Program
     {
