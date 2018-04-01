@@ -20,6 +20,8 @@
             base.Dispose(disposing);
         }
 
+        private System.Windows.Forms.PictureBox pb_luru;
+
         #region Windows Form Designer generated code
 
         /// <summary>

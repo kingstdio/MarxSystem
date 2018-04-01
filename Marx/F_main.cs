@@ -196,7 +196,6 @@ namespace Marx
         private System.ComponentModel.IContainer components;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel lb_totalNum;
-        private DevComponents.DotNetBar.Controls.TextBoxX tb_i_photoAddress;
         private DevComponents.DotNetBar.ButtonX buttonX1;
         private DevComponents.DotNetBar.LabelX labelX39;
         private OpenFileDialog opf_picture;
@@ -598,7 +597,7 @@ namespace Marx
         {
             opf_picture.ShowDialog();
             String picPath = opf_picture.FileName;
-            tb_i_photoAddress.Text = picPath;
+            
         }
         #endregion
 
@@ -608,12 +607,6 @@ namespace Marx
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F_main));
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
-            this.superTabControlPanel3 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.groupPanel4 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.lb_dangyuan = new DevComponents.DotNetBar.LabelX();
-            this.groupPanel3 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.lb_zaizhi = new DevComponents.DotNetBar.LabelX();
-            this.superTabItem3 = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.pb_person = new System.Windows.Forms.PictureBox();
             this.sw_t_phdTutor = new DevComponents.DotNetBar.Controls.SwitchButton();
@@ -690,6 +683,12 @@ namespace Marx
             this.labelX18 = new DevComponents.DotNetBar.LabelX();
             this.labelX22 = new DevComponents.DotNetBar.LabelX();
             this.superTabItem1 = new DevComponents.DotNetBar.SuperTabItem();
+            this.superTabControlPanel3 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.groupPanel4 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.lb_dangyuan = new DevComponents.DotNetBar.LabelX();
+            this.groupPanel3 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.lb_zaizhi = new DevComponents.DotNetBar.LabelX();
+            this.superTabItem3 = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.dtp_i_initime = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
             this.tb_i_inidegree = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -699,7 +698,6 @@ namespace Marx
             this.tb_i_inischool = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.tb_i_enddegree = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.tb_i_endxueli = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_i_photoAddress = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.tb_i_hukouAddress = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.tb_i_homeaddress = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.tb_i_familymember = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -770,17 +768,18 @@ namespace Marx
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lb_totalNum = new System.Windows.Forms.ToolStripStatusLabel();
             this.opf_picture = new System.Windows.Forms.OpenFileDialog();
+            this.pb_luru = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
-            this.superTabControlPanel3.SuspendLayout();
-            this.groupPanel4.SuspendLayout();
-            this.groupPanel3.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_person)).BeginInit();
             this.groupPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_qresult)).BeginInit();
             this.cms_dgvAction.SuspendLayout();
             this.groupPanel1.SuspendLayout();
+            this.superTabControlPanel3.SuspendLayout();
+            this.groupPanel4.SuspendLayout();
+            this.groupPanel3.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_initime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_endtime)).BeginInit();
@@ -788,6 +787,7 @@ namespace Marx
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_worktime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_birthday)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_luru)).BeginInit();
             this.SuspendLayout();
             // 
             // superTabControl1
@@ -811,9 +811,9 @@ namespace Marx
             this.superTabControl1.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.superTabControl1.ControlBox.MenuBox,
             this.superTabControl1.ControlBox.CloseBox});
-            this.superTabControl1.Controls.Add(this.superTabControlPanel1);
-            this.superTabControl1.Controls.Add(this.superTabControlPanel3);
             this.superTabControl1.Controls.Add(this.superTabControlPanel2);
+            this.superTabControl1.Controls.Add(this.superTabControlPanel3);
+            this.superTabControl1.Controls.Add(this.superTabControlPanel1);
             this.superTabControl1.ForeColor = System.Drawing.Color.Black;
             this.superTabControl1.Location = new System.Drawing.Point(1, 12);
             this.superTabControl1.Name = "superTabControl1";
@@ -828,134 +828,6 @@ namespace Marx
             this.superTabItem2,
             this.superTabItem3});
             this.superTabControl1.Text = "superTabControl1";
-            // 
-            // superTabControlPanel3
-            // 
-            this.superTabControlPanel3.Controls.Add(this.groupPanel4);
-            this.superTabControlPanel3.Controls.Add(this.groupPanel3);
-            this.superTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel3.Location = new System.Drawing.Point(0, 26);
-            this.superTabControlPanel3.Name = "superTabControlPanel3";
-            this.superTabControlPanel3.Size = new System.Drawing.Size(1422, 718);
-            this.superTabControlPanel3.TabIndex = 0;
-            this.superTabControlPanel3.TabItem = this.superTabItem3;
-            // 
-            // groupPanel4
-            // 
-            this.groupPanel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.groupPanel4.CanvasColor = System.Drawing.SystemColors.Control;
-            this.groupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.groupPanel4.Controls.Add(this.lb_dangyuan);
-            this.groupPanel4.DisabledBackColor = System.Drawing.Color.Empty;
-            this.groupPanel4.Location = new System.Drawing.Point(264, 47);
-            this.groupPanel4.Name = "groupPanel4";
-            this.groupPanel4.Size = new System.Drawing.Size(210, 100);
-            // 
-            // 
-            // 
-            this.groupPanel4.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.groupPanel4.Style.BackColorGradientAngle = 90;
-            this.groupPanel4.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.groupPanel4.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel4.Style.BorderBottomWidth = 1;
-            this.groupPanel4.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.groupPanel4.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel4.Style.BorderLeftWidth = 1;
-            this.groupPanel4.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel4.Style.BorderRightWidth = 1;
-            this.groupPanel4.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel4.Style.BorderTopWidth = 1;
-            this.groupPanel4.Style.CornerDiameter = 4;
-            this.groupPanel4.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
-            this.groupPanel4.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
-            this.groupPanel4.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.groupPanel4.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
-            // 
-            // 
-            // 
-            this.groupPanel4.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            // 
-            // 
-            // 
-            this.groupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.groupPanel4.TabIndex = 0;
-            this.groupPanel4.Text = "党员人数";
-            // 
-            // lb_dangyuan
-            // 
-            // 
-            // 
-            // 
-            this.lb_dangyuan.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.lb_dangyuan.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lb_dangyuan.ForeColor = System.Drawing.Color.Maroon;
-            this.lb_dangyuan.Location = new System.Drawing.Point(69, 27);
-            this.lb_dangyuan.Name = "lb_dangyuan";
-            this.lb_dangyuan.Size = new System.Drawing.Size(101, 23);
-            this.lb_dangyuan.TabIndex = 0;
-            this.lb_dangyuan.Text = "labelX65";
-            // 
-            // groupPanel3
-            // 
-            this.groupPanel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.groupPanel3.CanvasColor = System.Drawing.SystemColors.Control;
-            this.groupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.groupPanel3.Controls.Add(this.lb_zaizhi);
-            this.groupPanel3.DisabledBackColor = System.Drawing.Color.Empty;
-            this.groupPanel3.Location = new System.Drawing.Point(25, 49);
-            this.groupPanel3.Name = "groupPanel3";
-            this.groupPanel3.Size = new System.Drawing.Size(210, 100);
-            // 
-            // 
-            // 
-            this.groupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.groupPanel3.Style.BackColorGradientAngle = 90;
-            this.groupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.groupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel3.Style.BorderBottomWidth = 1;
-            this.groupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.groupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel3.Style.BorderLeftWidth = 1;
-            this.groupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel3.Style.BorderRightWidth = 1;
-            this.groupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel3.Style.BorderTopWidth = 1;
-            this.groupPanel3.Style.CornerDiameter = 4;
-            this.groupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
-            this.groupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
-            this.groupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.groupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
-            // 
-            // 
-            // 
-            this.groupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            // 
-            // 
-            // 
-            this.groupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.groupPanel3.TabIndex = 0;
-            this.groupPanel3.Text = "在职人数";
-            // 
-            // lb_zaizhi
-            // 
-            // 
-            // 
-            // 
-            this.lb_zaizhi.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.lb_zaizhi.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lb_zaizhi.ForeColor = System.Drawing.Color.Maroon;
-            this.lb_zaizhi.Location = new System.Drawing.Point(69, 27);
-            this.lb_zaizhi.Name = "lb_zaizhi";
-            this.lb_zaizhi.Size = new System.Drawing.Size(101, 23);
-            this.lb_zaizhi.TabIndex = 0;
-            this.lb_zaizhi.Text = "labelX65";
-            // 
-            // superTabItem3
-            // 
-            this.superTabItem3.AttachedControl = this.superTabControlPanel3;
-            this.superTabItem3.GlobalItem = false;
-            this.superTabItem3.Name = "superTabItem3";
-            this.superTabItem3.Text = "信息统计";
             // 
             // superTabControlPanel1
             // 
@@ -1118,13 +990,13 @@ namespace Marx
             this.cms_dgvAction.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.删除ToolStripMenuItem});
             this.cms_dgvAction.Name = "cms_dgvAction";
-            this.cms_dgvAction.Size = new System.Drawing.Size(143, 26);
+            this.cms_dgvAction.Size = new System.Drawing.Size(141, 26);
             // 
             // 删除ToolStripMenuItem
             // 
             this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
             this.删除ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.删除ToolStripMenuItem.Text = "删除";
             this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
             // 
@@ -2103,8 +1975,137 @@ namespace Marx
             this.superTabItem1.Name = "superTabItem1";
             this.superTabItem1.Text = "信息检索";
             // 
+            // superTabControlPanel3
+            // 
+            this.superTabControlPanel3.Controls.Add(this.groupPanel4);
+            this.superTabControlPanel3.Controls.Add(this.groupPanel3);
+            this.superTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel3.Location = new System.Drawing.Point(0, 26);
+            this.superTabControlPanel3.Name = "superTabControlPanel3";
+            this.superTabControlPanel3.Size = new System.Drawing.Size(1422, 718);
+            this.superTabControlPanel3.TabIndex = 0;
+            this.superTabControlPanel3.TabItem = this.superTabItem3;
+            // 
+            // groupPanel4
+            // 
+            this.groupPanel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.groupPanel4.CanvasColor = System.Drawing.SystemColors.Control;
+            this.groupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel4.Controls.Add(this.lb_dangyuan);
+            this.groupPanel4.DisabledBackColor = System.Drawing.Color.Empty;
+            this.groupPanel4.Location = new System.Drawing.Point(264, 47);
+            this.groupPanel4.Name = "groupPanel4";
+            this.groupPanel4.Size = new System.Drawing.Size(210, 100);
+            // 
+            // 
+            // 
+            this.groupPanel4.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
+            this.groupPanel4.Style.BackColorGradientAngle = 90;
+            this.groupPanel4.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.groupPanel4.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel4.Style.BorderBottomWidth = 1;
+            this.groupPanel4.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
+            this.groupPanel4.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel4.Style.BorderLeftWidth = 1;
+            this.groupPanel4.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel4.Style.BorderRightWidth = 1;
+            this.groupPanel4.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel4.Style.BorderTopWidth = 1;
+            this.groupPanel4.Style.CornerDiameter = 4;
+            this.groupPanel4.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
+            this.groupPanel4.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
+            this.groupPanel4.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            this.groupPanel4.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
+            // 
+            // 
+            // 
+            this.groupPanel4.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.groupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.groupPanel4.TabIndex = 0;
+            this.groupPanel4.Text = "党员人数";
+            // 
+            // lb_dangyuan
+            // 
+            // 
+            // 
+            // 
+            this.lb_dangyuan.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.lb_dangyuan.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_dangyuan.ForeColor = System.Drawing.Color.Maroon;
+            this.lb_dangyuan.Location = new System.Drawing.Point(69, 27);
+            this.lb_dangyuan.Name = "lb_dangyuan";
+            this.lb_dangyuan.Size = new System.Drawing.Size(101, 23);
+            this.lb_dangyuan.TabIndex = 0;
+            this.lb_dangyuan.Text = "labelX65";
+            // 
+            // groupPanel3
+            // 
+            this.groupPanel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.groupPanel3.CanvasColor = System.Drawing.SystemColors.Control;
+            this.groupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel3.Controls.Add(this.lb_zaizhi);
+            this.groupPanel3.DisabledBackColor = System.Drawing.Color.Empty;
+            this.groupPanel3.Location = new System.Drawing.Point(25, 49);
+            this.groupPanel3.Name = "groupPanel3";
+            this.groupPanel3.Size = new System.Drawing.Size(210, 100);
+            // 
+            // 
+            // 
+            this.groupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
+            this.groupPanel3.Style.BackColorGradientAngle = 90;
+            this.groupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.groupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderBottomWidth = 1;
+            this.groupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
+            this.groupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderLeftWidth = 1;
+            this.groupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderRightWidth = 1;
+            this.groupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel3.Style.BorderTopWidth = 1;
+            this.groupPanel3.Style.CornerDiameter = 4;
+            this.groupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
+            this.groupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
+            this.groupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            this.groupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
+            // 
+            // 
+            // 
+            this.groupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.groupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.groupPanel3.TabIndex = 0;
+            this.groupPanel3.Text = "在职人数";
+            // 
+            // lb_zaizhi
+            // 
+            // 
+            // 
+            // 
+            this.lb_zaizhi.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.lb_zaizhi.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_zaizhi.ForeColor = System.Drawing.Color.Maroon;
+            this.lb_zaizhi.Location = new System.Drawing.Point(69, 27);
+            this.lb_zaizhi.Name = "lb_zaizhi";
+            this.lb_zaizhi.Size = new System.Drawing.Size(101, 23);
+            this.lb_zaizhi.TabIndex = 0;
+            this.lb_zaizhi.Text = "labelX65";
+            // 
+            // superTabItem3
+            // 
+            this.superTabItem3.AttachedControl = this.superTabControlPanel3;
+            this.superTabItem3.GlobalItem = false;
+            this.superTabItem3.Name = "superTabItem3";
+            this.superTabItem3.Text = "信息统计";
+            // 
             // superTabControlPanel2
             // 
+            this.superTabControlPanel2.Controls.Add(this.pb_luru);
             this.superTabControlPanel2.Controls.Add(this.dtp_i_initime);
             this.superTabControlPanel2.Controls.Add(this.tb_i_inidegree);
             this.superTabControlPanel2.Controls.Add(this.tb_i_inixueli);
@@ -2113,7 +2114,6 @@ namespace Marx
             this.superTabControlPanel2.Controls.Add(this.tb_i_inischool);
             this.superTabControlPanel2.Controls.Add(this.tb_i_enddegree);
             this.superTabControlPanel2.Controls.Add(this.tb_i_endxueli);
-            this.superTabControlPanel2.Controls.Add(this.tb_i_photoAddress);
             this.superTabControlPanel2.Controls.Add(this.tb_i_hukouAddress);
             this.superTabControlPanel2.Controls.Add(this.tb_i_homeaddress);
             this.superTabControlPanel2.Controls.Add(this.tb_i_familymember);
@@ -2186,7 +2186,7 @@ namespace Marx
             this.dtp_i_initime.ButtonDropDown.Visible = true;
             this.dtp_i_initime.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp_i_initime.IsPopupCalendarOpen = false;
-            this.dtp_i_initime.Location = new System.Drawing.Point(602, 280);
+            this.dtp_i_initime.Location = new System.Drawing.Point(602, 245);
             // 
             // 
             // 
@@ -2232,7 +2232,7 @@ namespace Marx
             this.tb_i_inidegree.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_inidegree.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_inidegree.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_inidegree.Location = new System.Drawing.Point(407, 280);
+            this.tb_i_inidegree.Location = new System.Drawing.Point(407, 245);
             this.tb_i_inidegree.MaxLength = 32;
             this.tb_i_inidegree.Name = "tb_i_inidegree";
             this.tb_i_inidegree.PreventEnterBeep = true;
@@ -2250,7 +2250,7 @@ namespace Marx
             this.tb_i_inixueli.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_inixueli.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_inixueli.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_inixueli.Location = new System.Drawing.Point(216, 280);
+            this.tb_i_inixueli.Location = new System.Drawing.Point(216, 245);
             this.tb_i_inixueli.MaxLength = 32;
             this.tb_i_inixueli.Name = "tb_i_inixueli";
             this.tb_i_inixueli.PreventEnterBeep = true;
@@ -2268,7 +2268,7 @@ namespace Marx
             this.dtp_i_endtime.ButtonDropDown.Visible = true;
             this.dtp_i_endtime.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp_i_endtime.IsPopupCalendarOpen = false;
-            this.dtp_i_endtime.Location = new System.Drawing.Point(602, 324);
+            this.dtp_i_endtime.Location = new System.Drawing.Point(602, 289);
             // 
             // 
             // 
@@ -2314,7 +2314,7 @@ namespace Marx
             this.tb_i_endschool.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_endschool.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_endschool.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_endschool.Location = new System.Drawing.Point(874, 324);
+            this.tb_i_endschool.Location = new System.Drawing.Point(874, 289);
             this.tb_i_endschool.MaxLength = 50;
             this.tb_i_endschool.Name = "tb_i_endschool";
             this.tb_i_endschool.PreventEnterBeep = true;
@@ -2332,7 +2332,7 @@ namespace Marx
             this.tb_i_inischool.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_inischool.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_inischool.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_inischool.Location = new System.Drawing.Point(874, 280);
+            this.tb_i_inischool.Location = new System.Drawing.Point(874, 245);
             this.tb_i_inischool.MaxLength = 50;
             this.tb_i_inischool.Name = "tb_i_inischool";
             this.tb_i_inischool.PreventEnterBeep = true;
@@ -2350,7 +2350,7 @@ namespace Marx
             this.tb_i_enddegree.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_enddegree.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_enddegree.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_enddegree.Location = new System.Drawing.Point(407, 324);
+            this.tb_i_enddegree.Location = new System.Drawing.Point(407, 289);
             this.tb_i_enddegree.MaxLength = 32;
             this.tb_i_enddegree.Name = "tb_i_enddegree";
             this.tb_i_enddegree.PreventEnterBeep = true;
@@ -2368,31 +2368,12 @@ namespace Marx
             this.tb_i_endxueli.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_endxueli.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_endxueli.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_endxueli.Location = new System.Drawing.Point(216, 324);
+            this.tb_i_endxueli.Location = new System.Drawing.Point(216, 289);
             this.tb_i_endxueli.MaxLength = 32;
             this.tb_i_endxueli.Name = "tb_i_endxueli";
             this.tb_i_endxueli.PreventEnterBeep = true;
             this.tb_i_endxueli.Size = new System.Drawing.Size(93, 26);
             this.tb_i_endxueli.TabIndex = 20;
-            // 
-            // tb_i_photoAddress
-            // 
-            this.tb_i_photoAddress.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_i_photoAddress.Border.Class = "TextBoxBorder";
-            this.tb_i_photoAddress.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_i_photoAddress.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_i_photoAddress.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb_i_photoAddress.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_photoAddress.Location = new System.Drawing.Point(215, 544);
-            this.tb_i_photoAddress.MaxLength = 128;
-            this.tb_i_photoAddress.Name = "tb_i_photoAddress";
-            this.tb_i_photoAddress.PreventEnterBeep = true;
-            this.tb_i_photoAddress.ReadOnly = true;
-            this.tb_i_photoAddress.Size = new System.Drawing.Size(880, 26);
-            this.tb_i_photoAddress.TabIndex = 29;
             // 
             // tb_i_hukouAddress
             // 
@@ -2405,7 +2386,7 @@ namespace Marx
             this.tb_i_hukouAddress.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_hukouAddress.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_hukouAddress.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_hukouAddress.Location = new System.Drawing.Point(215, 500);
+            this.tb_i_hukouAddress.Location = new System.Drawing.Point(215, 465);
             this.tb_i_hukouAddress.MaxLength = 128;
             this.tb_i_hukouAddress.Name = "tb_i_hukouAddress";
             this.tb_i_hukouAddress.PreventEnterBeep = true;
@@ -2423,7 +2404,7 @@ namespace Marx
             this.tb_i_homeaddress.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_homeaddress.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_homeaddress.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_homeaddress.Location = new System.Drawing.Point(216, 458);
+            this.tb_i_homeaddress.Location = new System.Drawing.Point(216, 423);
             this.tb_i_homeaddress.MaxLength = 128;
             this.tb_i_homeaddress.Name = "tb_i_homeaddress";
             this.tb_i_homeaddress.PreventEnterBeep = true;
@@ -2441,7 +2422,7 @@ namespace Marx
             this.tb_i_familymember.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_familymember.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_familymember.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_familymember.Location = new System.Drawing.Point(216, 412);
+            this.tb_i_familymember.Location = new System.Drawing.Point(216, 377);
             this.tb_i_familymember.MaxLength = 128;
             this.tb_i_familymember.Name = "tb_i_familymember";
             this.tb_i_familymember.PreventEnterBeep = true;
@@ -2453,7 +2434,7 @@ namespace Marx
             this.bt_save.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.bt_save.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.bt_save.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt_save.Location = new System.Drawing.Point(694, 610);
+            this.bt_save.Location = new System.Drawing.Point(816, 565);
             this.bt_save.Name = "bt_save";
             this.bt_save.Size = new System.Drawing.Size(359, 58);
             this.bt_save.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -2466,9 +2447,9 @@ namespace Marx
             this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX1.Location = new System.Drawing.Point(1101, 544);
+            this.buttonX1.Location = new System.Drawing.Point(215, 670);
             this.buttonX1.Name = "buttonX1";
-            this.buttonX1.Size = new System.Drawing.Size(136, 26);
+            this.buttonX1.Size = new System.Drawing.Size(116, 26);
             this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonX1.TabIndex = 31;
             this.buttonX1.Text = "上传照片";
@@ -2479,7 +2460,7 @@ namespace Marx
             this.bt_clear.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.bt_clear.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.bt_clear.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt_clear.Location = new System.Drawing.Point(255, 610);
+            this.bt_clear.Location = new System.Drawing.Point(407, 565);
             this.bt_clear.Name = "bt_clear";
             this.bt_clear.Size = new System.Drawing.Size(359, 58);
             this.bt_clear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -2498,7 +2479,7 @@ namespace Marx
             this.tb_i_title.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_title.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_title.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_title.Location = new System.Drawing.Point(988, 148);
+            this.tb_i_title.Location = new System.Drawing.Point(988, 113);
             this.tb_i_title.MaxLength = 10;
             this.tb_i_title.Name = "tb_i_title";
             this.tb_i_title.PreventEnterBeep = true;
@@ -2516,7 +2497,7 @@ namespace Marx
             this.dtp_i_schooltime.ButtonDropDown.Visible = true;
             this.dtp_i_schooltime.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp_i_schooltime.IsPopupCalendarOpen = false;
-            this.dtp_i_schooltime.Location = new System.Drawing.Point(988, 192);
+            this.dtp_i_schooltime.Location = new System.Drawing.Point(988, 157);
             // 
             // 
             // 
@@ -2562,7 +2543,7 @@ namespace Marx
             this.tb_i_phone.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_phone.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_phone.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_phone.Location = new System.Drawing.Point(988, 60);
+            this.tb_i_phone.Location = new System.Drawing.Point(988, 25);
             this.tb_i_phone.MaxLength = 11;
             this.tb_i_phone.Name = "tb_i_phone";
             this.tb_i_phone.PreventEnterBeep = true;
@@ -2582,7 +2563,7 @@ namespace Marx
             this.comboItem4,
             this.comboItem5,
             this.comboItem6});
-            this.cmb_i_jys.Location = new System.Drawing.Point(988, 104);
+            this.cmb_i_jys.Location = new System.Drawing.Point(988, 69);
             this.cmb_i_jys.Name = "cmb_i_jys";
             this.cmb_i_jys.Size = new System.Drawing.Size(250, 27);
             this.cmb_i_jys.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -2611,7 +2592,7 @@ namespace Marx
             this.comboItem9,
             this.comboItem10,
             this.comboItem11});
-            this.cmb_i_hunyin.Location = new System.Drawing.Point(988, 236);
+            this.cmb_i_hunyin.Location = new System.Drawing.Point(988, 201);
             this.cmb_i_hunyin.Name = "cmb_i_hunyin";
             this.cmb_i_hunyin.Size = new System.Drawing.Size(250, 27);
             this.cmb_i_hunyin.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -2644,7 +2625,7 @@ namespace Marx
             this.tb_i_email.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_email.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_email.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_email.Location = new System.Drawing.Point(602, 236);
+            this.tb_i_email.Location = new System.Drawing.Point(602, 201);
             this.tb_i_email.MaxLength = 50;
             this.tb_i_email.Name = "tb_i_email";
             this.tb_i_email.PreventEnterBeep = true;
@@ -2662,7 +2643,7 @@ namespace Marx
             this.tb_i_zhiwu.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_zhiwu.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_zhiwu.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_zhiwu.Location = new System.Drawing.Point(602, 148);
+            this.tb_i_zhiwu.Location = new System.Drawing.Point(602, 113);
             this.tb_i_zhiwu.MaxLength = 32;
             this.tb_i_zhiwu.Name = "tb_i_zhiwu";
             this.tb_i_zhiwu.PreventEnterBeep = true;
@@ -2680,7 +2661,7 @@ namespace Marx
             this.dtp_i_worktime.ButtonDropDown.Visible = true;
             this.dtp_i_worktime.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp_i_worktime.IsPopupCalendarOpen = false;
-            this.dtp_i_worktime.Location = new System.Drawing.Point(602, 192);
+            this.dtp_i_worktime.Location = new System.Drawing.Point(602, 157);
             // 
             // 
             // 
@@ -2728,7 +2709,7 @@ namespace Marx
             this.comboItem1,
             this.comboItem2,
             this.comboItem3});
-            this.cmb_i_gender.Location = new System.Drawing.Point(602, 104);
+            this.cmb_i_gender.Location = new System.Drawing.Point(602, 69);
             this.cmb_i_gender.Name = "cmb_i_gender";
             this.cmb_i_gender.Size = new System.Drawing.Size(250, 27);
             this.cmb_i_gender.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -2753,7 +2734,7 @@ namespace Marx
             this.tb_i_idcard.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_idcard.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_idcard.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_idcard.Location = new System.Drawing.Point(216, 59);
+            this.tb_i_idcard.Location = new System.Drawing.Point(216, 24);
             this.tb_i_idcard.MaxLength = 18;
             this.tb_i_idcard.Name = "tb_i_idcard";
             this.tb_i_idcard.PreventEnterBeep = true;
@@ -2772,7 +2753,7 @@ namespace Marx
             this.tb_i_gzz.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_gzz.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_gzz.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_gzz.Location = new System.Drawing.Point(602, 60);
+            this.tb_i_gzz.Location = new System.Drawing.Point(602, 25);
             this.tb_i_gzz.MaxLength = 6;
             this.tb_i_gzz.Name = "tb_i_gzz";
             this.tb_i_gzz.PreventEnterBeep = true;
@@ -2790,7 +2771,7 @@ namespace Marx
             this.dtp_i_birthday.ButtonDropDown.Visible = true;
             this.dtp_i_birthday.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp_i_birthday.IsPopupCalendarOpen = false;
-            this.dtp_i_birthday.Location = new System.Drawing.Point(216, 192);
+            this.dtp_i_birthday.Location = new System.Drawing.Point(216, 157);
             // 
             // 
             // 
@@ -2836,7 +2817,7 @@ namespace Marx
             this.tb_i_nation.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_nation.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_nation.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_nation.Location = new System.Drawing.Point(216, 148);
+            this.tb_i_nation.Location = new System.Drawing.Point(216, 113);
             this.tb_i_nation.MaxLength = 32;
             this.tb_i_nation.Name = "tb_i_nation";
             this.tb_i_nation.PreventEnterBeep = true;
@@ -2854,7 +2835,7 @@ namespace Marx
             this.tb_i_zzmm.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_zzmm.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_zzmm.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_zzmm.Location = new System.Drawing.Point(216, 236);
+            this.tb_i_zzmm.Location = new System.Drawing.Point(216, 201);
             this.tb_i_zzmm.MaxLength = 32;
             this.tb_i_zzmm.Name = "tb_i_zzmm";
             this.tb_i_zzmm.PreventEnterBeep = true;
@@ -2872,7 +2853,7 @@ namespace Marx
             this.tb_i_name.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_name.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_name.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_name.Location = new System.Drawing.Point(216, 104);
+            this.tb_i_name.Location = new System.Drawing.Point(216, 69);
             this.tb_i_name.MaxLength = 32;
             this.tb_i_name.Name = "tb_i_name";
             this.tb_i_name.PreventEnterBeep = true;
@@ -2886,7 +2867,7 @@ namespace Marx
             // 
             this.sw_i_phdtutor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.sw_i_phdtutor.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.sw_i_phdtutor.Location = new System.Drawing.Point(216, 370);
+            this.sw_i_phdtutor.Location = new System.Drawing.Point(216, 335);
             this.sw_i_phdtutor.Name = "sw_i_phdtutor";
             this.sw_i_phdtutor.OffText = "否";
             this.sw_i_phdtutor.OnText = "是";
@@ -2906,7 +2887,7 @@ namespace Marx
             this.tb_i_subject.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_subject.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_subject.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_subject.Location = new System.Drawing.Point(983, 368);
+            this.tb_i_subject.Location = new System.Drawing.Point(983, 333);
             this.tb_i_subject.MaxLength = 50;
             this.tb_i_subject.Name = "tb_i_subject";
             this.tb_i_subject.PreventEnterBeep = true;
@@ -2924,7 +2905,7 @@ namespace Marx
             this.tb_i_researchArea.DisabledBackColor = System.Drawing.Color.White;
             this.tb_i_researchArea.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb_i_researchArea.ForeColor = System.Drawing.Color.Black;
-            this.tb_i_researchArea.Location = new System.Drawing.Point(530, 368);
+            this.tb_i_researchArea.Location = new System.Drawing.Point(530, 333);
             this.tb_i_researchArea.MaxLength = 128;
             this.tb_i_researchArea.Name = "tb_i_researchArea";
             this.tb_i_researchArea.PreventEnterBeep = true;
@@ -2939,7 +2920,7 @@ namespace Marx
             // 
             this.labelX63.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX63.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX63.Location = new System.Drawing.Point(127, 106);
+            this.labelX63.Location = new System.Drawing.Point(127, 71);
             this.labelX63.Name = "labelX63";
             this.labelX63.Size = new System.Drawing.Size(83, 23);
             this.labelX63.TabIndex = 8;
@@ -2954,7 +2935,7 @@ namespace Marx
             // 
             this.labelX62.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX62.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX62.Location = new System.Drawing.Point(508, 106);
+            this.labelX62.Location = new System.Drawing.Point(508, 71);
             this.labelX62.Name = "labelX62";
             this.labelX62.Size = new System.Drawing.Size(97, 23);
             this.labelX62.TabIndex = 9;
@@ -2970,7 +2951,7 @@ namespace Marx
             // 
             this.labelX61.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX61.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX61.Location = new System.Drawing.Point(127, 150);
+            this.labelX61.Location = new System.Drawing.Point(127, 115);
             this.labelX61.Name = "labelX61";
             this.labelX61.Size = new System.Drawing.Size(83, 23);
             this.labelX61.TabIndex = 12;
@@ -2985,7 +2966,7 @@ namespace Marx
             // 
             this.labelX60.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX60.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX60.Location = new System.Drawing.Point(504, 150);
+            this.labelX60.Location = new System.Drawing.Point(504, 115);
             this.labelX60.Name = "labelX60";
             this.labelX60.Size = new System.Drawing.Size(101, 23);
             this.labelX60.TabIndex = 10;
@@ -3000,7 +2981,7 @@ namespace Marx
             // 
             this.labelX59.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX59.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX59.Location = new System.Drawing.Point(880, 150);
+            this.labelX59.Location = new System.Drawing.Point(880, 115);
             this.labelX59.Name = "labelX59";
             this.labelX59.Size = new System.Drawing.Size(110, 23);
             this.labelX59.TabIndex = 11;
@@ -3015,7 +2996,7 @@ namespace Marx
             // 
             this.labelX58.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX58.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX58.Location = new System.Drawing.Point(508, 62);
+            this.labelX58.Location = new System.Drawing.Point(508, 27);
             this.labelX58.Name = "labelX58";
             this.labelX58.Size = new System.Drawing.Size(97, 23);
             this.labelX58.TabIndex = 33;
@@ -3031,7 +3012,7 @@ namespace Marx
             // 
             this.labelX57.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX57.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX57.Location = new System.Drawing.Point(115, 62);
+            this.labelX57.Location = new System.Drawing.Point(115, 27);
             this.labelX57.Name = "labelX57";
             this.labelX57.Size = new System.Drawing.Size(95, 23);
             this.labelX57.TabIndex = 32;
@@ -3046,7 +3027,7 @@ namespace Marx
             // 
             this.labelX56.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX56.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX56.Location = new System.Drawing.Point(853, 62);
+            this.labelX56.Location = new System.Drawing.Point(853, 27);
             this.labelX56.Name = "labelX56";
             this.labelX56.Size = new System.Drawing.Size(137, 23);
             this.labelX56.TabIndex = 31;
@@ -3062,7 +3043,7 @@ namespace Marx
             // 
             this.labelX55.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX55.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX55.Location = new System.Drawing.Point(95, 194);
+            this.labelX55.Location = new System.Drawing.Point(95, 159);
             this.labelX55.Name = "labelX55";
             this.labelX55.Size = new System.Drawing.Size(115, 23);
             this.labelX55.TabIndex = 30;
@@ -3077,7 +3058,7 @@ namespace Marx
             // 
             this.labelX54.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX54.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX54.Location = new System.Drawing.Point(874, 106);
+            this.labelX54.Location = new System.Drawing.Point(874, 71);
             this.labelX54.Name = "labelX54";
             this.labelX54.Size = new System.Drawing.Size(116, 23);
             this.labelX54.TabIndex = 29;
@@ -3093,7 +3074,7 @@ namespace Marx
             // 
             this.labelX53.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX53.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX53.Location = new System.Drawing.Point(98, 238);
+            this.labelX53.Location = new System.Drawing.Point(98, 203);
             this.labelX53.Name = "labelX53";
             this.labelX53.Size = new System.Drawing.Size(112, 23);
             this.labelX53.TabIndex = 28;
@@ -3108,7 +3089,7 @@ namespace Marx
             // 
             this.labelX52.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX52.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX52.Location = new System.Drawing.Point(490, 194);
+            this.labelX52.Location = new System.Drawing.Point(490, 159);
             this.labelX52.Name = "labelX52";
             this.labelX52.Size = new System.Drawing.Size(115, 23);
             this.labelX52.TabIndex = 27;
@@ -3124,7 +3105,7 @@ namespace Marx
             // 
             this.labelX50.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX50.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX50.Location = new System.Drawing.Point(114, 282);
+            this.labelX50.Location = new System.Drawing.Point(114, 247);
             this.labelX50.Name = "labelX50";
             this.labelX50.Size = new System.Drawing.Size(96, 23);
             this.labelX50.TabIndex = 25;
@@ -3139,7 +3120,7 @@ namespace Marx
             // 
             this.labelX51.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX51.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX51.Location = new System.Drawing.Point(493, 238);
+            this.labelX51.Location = new System.Drawing.Point(493, 203);
             this.labelX51.Name = "labelX51";
             this.labelX51.Size = new System.Drawing.Size(112, 23);
             this.labelX51.TabIndex = 26;
@@ -3154,7 +3135,7 @@ namespace Marx
             // 
             this.labelX49.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX49.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX49.Location = new System.Drawing.Point(83, 458);
+            this.labelX49.Location = new System.Drawing.Point(83, 423);
             this.labelX49.Name = "labelX49";
             this.labelX49.Size = new System.Drawing.Size(127, 23);
             this.labelX49.TabIndex = 35;
@@ -3169,7 +3150,7 @@ namespace Marx
             // 
             this.labelX48.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX48.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX48.Location = new System.Drawing.Point(90, 326);
+            this.labelX48.Location = new System.Drawing.Point(90, 291);
             this.labelX48.Name = "labelX48";
             this.labelX48.Size = new System.Drawing.Size(120, 23);
             this.labelX48.TabIndex = 23;
@@ -3184,7 +3165,7 @@ namespace Marx
             // 
             this.labelX47.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX47.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX47.Location = new System.Drawing.Point(317, 282);
+            this.labelX47.Location = new System.Drawing.Point(317, 247);
             this.labelX47.Name = "labelX47";
             this.labelX47.Size = new System.Drawing.Size(99, 23);
             this.labelX47.TabIndex = 34;
@@ -3199,7 +3180,7 @@ namespace Marx
             // 
             this.labelX45.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX45.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX45.Location = new System.Drawing.Point(875, 194);
+            this.labelX45.Location = new System.Drawing.Point(875, 159);
             this.labelX45.Name = "labelX45";
             this.labelX45.Size = new System.Drawing.Size(115, 23);
             this.labelX45.TabIndex = 21;
@@ -3215,7 +3196,7 @@ namespace Marx
             // 
             this.labelX44.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX44.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX44.Location = new System.Drawing.Point(310, 326);
+            this.labelX44.Location = new System.Drawing.Point(310, 291);
             this.labelX44.Name = "labelX44";
             this.labelX44.Size = new System.Drawing.Size(106, 23);
             this.labelX44.TabIndex = 20;
@@ -3230,7 +3211,7 @@ namespace Marx
             // 
             this.labelX46.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX46.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX46.Location = new System.Drawing.Point(521, 326);
+            this.labelX46.Location = new System.Drawing.Point(521, 291);
             this.labelX46.Name = "labelX46";
             this.labelX46.Size = new System.Drawing.Size(93, 23);
             this.labelX46.TabIndex = 19;
@@ -3244,7 +3225,7 @@ namespace Marx
             // 
             this.labelX43.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX43.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX43.Location = new System.Drawing.Point(521, 282);
+            this.labelX43.Location = new System.Drawing.Point(521, 247);
             this.labelX43.Name = "labelX43";
             this.labelX43.Size = new System.Drawing.Size(93, 23);
             this.labelX43.TabIndex = 19;
@@ -3258,7 +3239,7 @@ namespace Marx
             // 
             this.labelX64.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX64.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX64.Location = new System.Drawing.Point(781, 326);
+            this.labelX64.Location = new System.Drawing.Point(781, 291);
             this.labelX64.Name = "labelX64";
             this.labelX64.Size = new System.Drawing.Size(96, 23);
             this.labelX64.TabIndex = 18;
@@ -3272,7 +3253,7 @@ namespace Marx
             // 
             this.labelX39.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX39.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX39.Location = new System.Drawing.Point(88, 546);
+            this.labelX39.Location = new System.Drawing.Point(88, 580);
             this.labelX39.Name = "labelX39";
             this.labelX39.Size = new System.Drawing.Size(121, 23);
             this.labelX39.TabIndex = 16;
@@ -3287,7 +3268,7 @@ namespace Marx
             // 
             this.labelX42.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX42.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX42.Location = new System.Drawing.Point(781, 282);
+            this.labelX42.Location = new System.Drawing.Point(781, 247);
             this.labelX42.Name = "labelX42";
             this.labelX42.Size = new System.Drawing.Size(96, 23);
             this.labelX42.TabIndex = 18;
@@ -3301,7 +3282,7 @@ namespace Marx
             // 
             this.labelX40.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX40.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX40.Location = new System.Drawing.Point(88, 502);
+            this.labelX40.Location = new System.Drawing.Point(88, 467);
             this.labelX40.Name = "labelX40";
             this.labelX40.Size = new System.Drawing.Size(121, 23);
             this.labelX40.TabIndex = 16;
@@ -3316,7 +3297,7 @@ namespace Marx
             // 
             this.labelX38.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX38.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX38.Location = new System.Drawing.Point(797, 370);
+            this.labelX38.Location = new System.Drawing.Point(797, 335);
             this.labelX38.Name = "labelX38";
             this.labelX38.Size = new System.Drawing.Size(193, 22);
             this.labelX38.TabIndex = 14;
@@ -3331,7 +3312,7 @@ namespace Marx
             // 
             this.labelX34.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX34.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX34.Location = new System.Drawing.Point(88, 370);
+            this.labelX34.Location = new System.Drawing.Point(88, 335);
             this.labelX34.Name = "labelX34";
             this.labelX34.Size = new System.Drawing.Size(122, 23);
             this.labelX34.TabIndex = 37;
@@ -3346,7 +3327,7 @@ namespace Marx
             // 
             this.labelX37.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX37.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX37.Location = new System.Drawing.Point(880, 238);
+            this.labelX37.Location = new System.Drawing.Point(880, 203);
             this.labelX37.Name = "labelX37";
             this.labelX37.Size = new System.Drawing.Size(112, 23);
             this.labelX37.TabIndex = 13;
@@ -3362,7 +3343,7 @@ namespace Marx
             // 
             this.labelX35.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX35.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX35.Location = new System.Drawing.Point(70, 414);
+            this.labelX35.Location = new System.Drawing.Point(70, 379);
             this.labelX35.Name = "labelX35";
             this.labelX35.Size = new System.Drawing.Size(140, 23);
             this.labelX35.TabIndex = 36;
@@ -3377,7 +3358,7 @@ namespace Marx
             // 
             this.labelX36.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX36.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX36.Location = new System.Drawing.Point(394, 367);
+            this.labelX36.Location = new System.Drawing.Point(394, 332);
             this.labelX36.Name = "labelX36";
             this.labelX36.Size = new System.Drawing.Size(150, 29);
             this.labelX36.TabIndex = 24;
@@ -3421,6 +3402,14 @@ namespace Marx
             this.opf_picture.FileName = "openFileDialog1";
             this.opf_picture.Filter = "图片|*.bmp;*.jpg;*.png;*.jpeg;*.JPG;*.PNG;*.BMP;*.JPEG|所有文件 (*.*)|*.*\"";
             // 
+            // pb_luru
+            // 
+            this.pb_luru.Location = new System.Drawing.Point(216, 511);
+            this.pb_luru.Name = "pb_luru";
+            this.pb_luru.Size = new System.Drawing.Size(115, 153);
+            this.pb_luru.TabIndex = 38;
+            this.pb_luru.TabStop = false;
+            // 
             // F_main
             // 
             this.AcceptButton = this.bt_jiansuo;
@@ -3435,15 +3424,15 @@ namespace Marx
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).EndInit();
             this.superTabControl1.ResumeLayout(false);
-            this.superTabControlPanel3.ResumeLayout(false);
-            this.groupPanel4.ResumeLayout(false);
-            this.groupPanel3.ResumeLayout(false);
             this.superTabControlPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pb_person)).EndInit();
             this.groupPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_qresult)).EndInit();
             this.cms_dgvAction.ResumeLayout(false);
             this.groupPanel1.ResumeLayout(false);
+            this.superTabControlPanel3.ResumeLayout(false);
+            this.groupPanel4.ResumeLayout(false);
+            this.groupPanel3.ResumeLayout(false);
             this.superTabControlPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_initime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_endtime)).EndInit();
@@ -3452,6 +3441,7 @@ namespace Marx
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_birthday)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_luru)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
