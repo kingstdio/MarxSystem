@@ -48,6 +48,13 @@ namespace Marx
         private string photoPath;
 
         private DataTable qdatatable;
+
+        private string pathDocCache = Application.StartupPath + @"\cache\";
+        private string pathDocTemplate = Application.StartupPath + @"\template\resume.dotx";
+
+
+
+
         private DevComponents.DotNetBar.SuperTabControl superTabControl1;
         private DevComponents.DotNetBar.SuperTabControlPanel superTabControlPanel1;
         private DevComponents.DotNetBar.Controls.SwitchButton sw_t_phdTutor;
@@ -235,6 +242,13 @@ namespace Marx
             lb_zaizhi.Text = numCount.ToString();
             sql = @"select count(id) from tb_basicInfo where politicalStatus ='中共党员'";
             lb_dangyuan.Text = SQLHELPER.GetSingleResultString(sql);
+
+            //初始化缓冲文件夹
+            if (!Directory.Exists(pathDocCache))
+            {
+                Directory.CreateDirectory(pathDocCache);
+            }
+
         }
         #endregion
 
@@ -277,52 +291,58 @@ namespace Marx
                   FROM tb_basicInfo where idcard='" + idCard + "'";
             DataRow dr = SQLHELPER.ExecuteDataRow(sql);
 
-            tb_t_xm.Text = dr["name"].ToString();
-            tb_t_gzz.Text = dr["tid"].ToString();
-            tb_t_phone.Text = dr["phone"].ToString();
-            tb_t_gender.Text = dr["gender"].ToString();
-            tb_t_idcard.Text = dr["idcard"].ToString();
-            tb_t_jiaoyanshi.Text = dr["researchSection"].ToString();
-            tb_t_nation.Text = dr["nation"].ToString();
-            dtp_t_birthday.Text = dr["birthday"].ToString();
-            dtp_t_worktime.Text = dr["workStrartDate"].ToString();
-            tb_t_zhiwu.Text = dr["duty"].ToString();
-            tb_t_title.Text = dr["title"].ToString();
-            tb_t_zzmm.Text = dr["politicalStatus"].ToString();
-            dtp_t_schoolTime.Text = dr["schoolStartDate"].ToString();
-            tb_t_email.Text = dr["email"].ToString();
-            tb_t_hunyin.Text = dr["civilState"].ToString();
-            tb_t_homeAddress.Text = dr["homeAddress"].ToString();
-            tb_t_hukouaddress.Text = dr["residenceAddress"].ToString();
-            tb_t_subject.Text = dr["subject"].ToString();
-            tb_t_researchArea.Text = dr["rearchArea"].ToString();
-            tb_t_familyMember.Text = dr["familyMembers"].ToString();
-            if (dr["tutorOfPhD"].ToString().Trim() != string.Empty)
-            {
-                sw_t_phdTutor.Value = (bool)dr["tutorOfPhD"] ? true : false;
-            }
-            else
-            {
-                sw_t_phdTutor.Value = false;
-            }
-            tb_t_workLength.Text = ((float)(DateTime.Now.Subtract(dtp_t_worktime.Value)).Days / 365).ToString("##.#");
-            tb_t_inixueli.Text = dr["initEducation"].ToString();
-            tb_t_iniDegree.Text = dr["initDegree"].ToString();
-            tb_t_inischool.Text = dr["initSchool"].ToString();
-            dtp_t_initime.Text = dr["intiDate"].ToString();
-            tb_t_endxueli.Text = dr["lastEducation"].ToString();
-            tb_t_endDegree.Text = dr["lastDegree"].ToString();
-            tb_t_endSchool.Text = dr["lastSchool"].ToString();
-            dtp_t_endTime.Text = dr["lastDate"].ToString();
-            string ppath = dr["photo"].ToString().Trim();
-            if (ppath != string.Empty)
-            {
-                pb_person.Image = Image.FromFile((Application.StartupPath + @"\" + ppath));
-            }
-            else
-            {
-                pb_person.Image = null;
-            }
+
+
+            //tb_t_xm.Text = dr["name"].ToString();
+            //tb_t_gzz.Text = dr["tid"].ToString();
+            //tb_t_phone.Text = dr["phone"].ToString();
+            //tb_t_gender.Text = dr["gender"].ToString();
+            //tb_t_idcard.Text = dr["idcard"].ToString();
+            //tb_t_jiaoyanshi.Text = dr["researchSection"].ToString();
+            //tb_t_nation.Text = dr["nation"].ToString();
+            //dtp_t_birthday.Text = dr["birthday"].ToString();
+            //dtp_t_worktime.Text = dr["workStrartDate"].ToString();
+            //tb_t_zhiwu.Text = dr["duty"].ToString();
+            //tb_t_title.Text = dr["title"].ToString();
+            //tb_t_zzmm.Text = dr["politicalStatus"].ToString();
+            //dtp_t_schoolTime.Text = dr["schoolStartDate"].ToString();
+            //tb_t_email.Text = dr["email"].ToString();
+            //tb_t_hunyin.Text = dr["civilState"].ToString();
+            //tb_t_homeAddress.Text = dr["homeAddress"].ToString();
+            //tb_t_hukouaddress.Text = dr["residenceAddress"].ToString();
+            //tb_t_subject.Text = dr["subject"].ToString();
+            //tb_t_researchArea.Text = dr["rearchArea"].ToString();
+            //tb_t_familyMember.Text = dr["familyMembers"].ToString();
+            //if (dr["tutorOfPhD"].ToString().Trim() != string.Empty)
+            //{
+            //    sw_t_phdTutor.Value = (bool)dr["tutorOfPhD"] ? true : false;
+            //}
+            //else
+            //{
+            //    sw_t_phdTutor.Value = false;
+            //}
+            //tb_t_workLength.Text = ((float)(DateTime.Now.Subtract(dtp_t_worktime.Value)).Days / 365).ToString("##.#");
+            //tb_t_inixueli.Text = dr["initEducation"].ToString();
+            //tb_t_iniDegree.Text = dr["initDegree"].ToString();
+            //tb_t_inischool.Text = dr["initSchool"].ToString();
+            //dtp_t_initime.Text = dr["intiDate"].ToString();
+            //tb_t_endxueli.Text = dr["lastEducation"].ToString();
+            //tb_t_endDegree.Text = dr["lastDegree"].ToString();
+            //tb_t_endSchool.Text = dr["lastSchool"].ToString();
+            //dtp_t_endTime.Text = dr["lastDate"].ToString();
+            //string ppath = dr["photo"].ToString().Trim();
+            //if (ppath != string.Empty)
+            //{
+            //    pb_person.Image = Image.FromFile((Application.StartupPath + @"\" + ppath));
+            //}
+            //else
+            //{
+            //    pb_person.Image = null;
+            //}
+            string cacc = DateTime.Now.ToBinary().ToString(); 
+            Utils.WordTools.Create(pathDocTemplate, pathDocCache, dr);
+            
+            //this.axdoc_main.Open(pathDocCache + @"cache"+ cacc + ".docx",true,null,null,null);
         }
         #endregion
 
@@ -640,6 +660,85 @@ namespace Marx
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F_main));
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
+            this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.pb_person = new System.Windows.Forms.PictureBox();
+            this.sw_t_phdTutor = new DevComponents.DotNetBar.Controls.SwitchButton();
+            this.groupPanel2 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.dgv_qresult = new System.Windows.Forms.DataGridView();
+            this.cms_dgvAction = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dtp_t_endTime = new System.Windows.Forms.DateTimePicker();
+            this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.bt_jiansuo = new DevComponents.DotNetBar.ButtonX();
+            this.tb_sfzh = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_gzzh = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_xm = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.labelX3 = new DevComponents.DotNetBar.LabelX();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
+            this.dtp_t_initime = new System.Windows.Forms.DateTimePicker();
+            this.dtp_t_schoolTime = new System.Windows.Forms.DateTimePicker();
+            this.dtp_t_worktime = new System.Windows.Forms.DateTimePicker();
+            this.dtp_t_birthday = new System.Windows.Forms.DateTimePicker();
+            this.tb_t_title = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_zhiwu = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_nation = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_gender = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_endSchool = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_hunyin = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_endDegree = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_inischool = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_endxueli = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_workLength = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_iniDegree = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_inixueli = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_email = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_zzmm = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_familyMember = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.labelX33 = new DevComponents.DotNetBar.LabelX();
+            this.tb_t_researchArea = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_subject = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_hukouaddress = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_homeAddress = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_jiaoyanshi = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_idcard = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_phone = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_xm = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.tb_t_gzz = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.labelX4 = new DevComponents.DotNetBar.LabelX();
+            this.labelX5 = new DevComponents.DotNetBar.LabelX();
+            this.labelX6 = new DevComponents.DotNetBar.LabelX();
+            this.labelX10 = new DevComponents.DotNetBar.LabelX();
+            this.labelX11 = new DevComponents.DotNetBar.LabelX();
+            this.labelX7 = new DevComponents.DotNetBar.LabelX();
+            this.labelX8 = new DevComponents.DotNetBar.LabelX();
+            this.labelX14 = new DevComponents.DotNetBar.LabelX();
+            this.labelX9 = new DevComponents.DotNetBar.LabelX();
+            this.labelX15 = new DevComponents.DotNetBar.LabelX();
+            this.labelX12 = new DevComponents.DotNetBar.LabelX();
+            this.labelX16 = new DevComponents.DotNetBar.LabelX();
+            this.labelX13 = new DevComponents.DotNetBar.LabelX();
+            this.labelX25 = new DevComponents.DotNetBar.LabelX();
+            this.labelX19 = new DevComponents.DotNetBar.LabelX();
+            this.labelX29 = new DevComponents.DotNetBar.LabelX();
+            this.labelX41 = new DevComponents.DotNetBar.LabelX();
+            this.labelX26 = new DevComponents.DotNetBar.LabelX();
+            this.labelX17 = new DevComponents.DotNetBar.LabelX();
+            this.labelX30 = new DevComponents.DotNetBar.LabelX();
+            this.labelX27 = new DevComponents.DotNetBar.LabelX();
+            this.labelX28 = new DevComponents.DotNetBar.LabelX();
+            this.labelX31 = new DevComponents.DotNetBar.LabelX();
+            this.labelX20 = new DevComponents.DotNetBar.LabelX();
+            this.labelX32 = new DevComponents.DotNetBar.LabelX();
+            this.labelX24 = new DevComponents.DotNetBar.LabelX();
+            this.labelX23 = new DevComponents.DotNetBar.LabelX();
+            this.labelX21 = new DevComponents.DotNetBar.LabelX();
+            this.labelX18 = new DevComponents.DotNetBar.LabelX();
+            this.labelX22 = new DevComponents.DotNetBar.LabelX();
+            this.superTabItem1 = new DevComponents.DotNetBar.SuperTabItem();
+            this.superTabControlPanel4 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.superTabItem4 = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.pb_luru = new System.Windows.Forms.PictureBox();
             this.dtp_i_initime = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
@@ -722,88 +821,20 @@ namespace Marx
             this.groupPanel3 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.lb_zaizhi = new DevComponents.DotNetBar.LabelX();
             this.superTabItem3 = new DevComponents.DotNetBar.SuperTabItem();
-            this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.pb_person = new System.Windows.Forms.PictureBox();
-            this.sw_t_phdTutor = new DevComponents.DotNetBar.Controls.SwitchButton();
-            this.groupPanel2 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.dgv_qresult = new System.Windows.Forms.DataGridView();
-            this.cms_dgvAction = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dtp_t_endTime = new System.Windows.Forms.DateTimePicker();
-            this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.bt_jiansuo = new DevComponents.DotNetBar.ButtonX();
-            this.tb_sfzh = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_gzzh = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_xm = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.labelX3 = new DevComponents.DotNetBar.LabelX();
-            this.labelX2 = new DevComponents.DotNetBar.LabelX();
-            this.labelX1 = new DevComponents.DotNetBar.LabelX();
-            this.dtp_t_initime = new System.Windows.Forms.DateTimePicker();
-            this.dtp_t_schoolTime = new System.Windows.Forms.DateTimePicker();
-            this.dtp_t_worktime = new System.Windows.Forms.DateTimePicker();
-            this.dtp_t_birthday = new System.Windows.Forms.DateTimePicker();
-            this.tb_t_title = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_zhiwu = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_nation = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_gender = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_endSchool = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_hunyin = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_endDegree = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_inischool = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_endxueli = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_workLength = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_iniDegree = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_inixueli = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_email = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_zzmm = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_familyMember = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.labelX33 = new DevComponents.DotNetBar.LabelX();
-            this.tb_t_researchArea = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_subject = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_hukouaddress = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_homeAddress = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_jiaoyanshi = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_idcard = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_phone = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_xm = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.tb_t_gzz = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.labelX4 = new DevComponents.DotNetBar.LabelX();
-            this.labelX5 = new DevComponents.DotNetBar.LabelX();
-            this.labelX6 = new DevComponents.DotNetBar.LabelX();
-            this.labelX10 = new DevComponents.DotNetBar.LabelX();
-            this.labelX11 = new DevComponents.DotNetBar.LabelX();
-            this.labelX7 = new DevComponents.DotNetBar.LabelX();
-            this.labelX8 = new DevComponents.DotNetBar.LabelX();
-            this.labelX14 = new DevComponents.DotNetBar.LabelX();
-            this.labelX9 = new DevComponents.DotNetBar.LabelX();
-            this.labelX15 = new DevComponents.DotNetBar.LabelX();
-            this.labelX12 = new DevComponents.DotNetBar.LabelX();
-            this.labelX16 = new DevComponents.DotNetBar.LabelX();
-            this.labelX13 = new DevComponents.DotNetBar.LabelX();
-            this.labelX25 = new DevComponents.DotNetBar.LabelX();
-            this.labelX19 = new DevComponents.DotNetBar.LabelX();
-            this.labelX29 = new DevComponents.DotNetBar.LabelX();
-            this.labelX41 = new DevComponents.DotNetBar.LabelX();
-            this.labelX26 = new DevComponents.DotNetBar.LabelX();
-            this.labelX17 = new DevComponents.DotNetBar.LabelX();
-            this.labelX30 = new DevComponents.DotNetBar.LabelX();
-            this.labelX27 = new DevComponents.DotNetBar.LabelX();
-            this.labelX28 = new DevComponents.DotNetBar.LabelX();
-            this.labelX31 = new DevComponents.DotNetBar.LabelX();
-            this.labelX20 = new DevComponents.DotNetBar.LabelX();
-            this.labelX32 = new DevComponents.DotNetBar.LabelX();
-            this.labelX24 = new DevComponents.DotNetBar.LabelX();
-            this.labelX23 = new DevComponents.DotNetBar.LabelX();
-            this.labelX21 = new DevComponents.DotNetBar.LabelX();
-            this.labelX18 = new DevComponents.DotNetBar.LabelX();
-            this.labelX22 = new DevComponents.DotNetBar.LabelX();
-            this.superTabItem1 = new DevComponents.DotNetBar.SuperTabItem();
             this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lb_totalNum = new System.Windows.Forms.ToolStripStatusLabel();
             this.opf_picture = new System.Windows.Forms.OpenFileDialog();
+            this.axdoc_main = new AxDSOFramer.AxFramerControl();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
+            this.superTabControlPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_person)).BeginInit();
+            this.groupPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_qresult)).BeginInit();
+            this.cms_dgvAction.SuspendLayout();
+            this.groupPanel1.SuspendLayout();
+            this.superTabControlPanel4.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_luru)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_initime)).BeginInit();
@@ -814,13 +845,8 @@ namespace Marx
             this.superTabControlPanel3.SuspendLayout();
             this.groupPanel4.SuspendLayout();
             this.groupPanel3.SuspendLayout();
-            this.superTabControlPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_person)).BeginInit();
-            this.groupPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_qresult)).BeginInit();
-            this.cms_dgvAction.SuspendLayout();
-            this.groupPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axdoc_main)).BeginInit();
             this.SuspendLayout();
             // 
             // superTabControl1
@@ -844,8 +870,9 @@ namespace Marx
             this.superTabControl1.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.superTabControl1.ControlBox.MenuBox,
             this.superTabControl1.ControlBox.CloseBox});
-            this.superTabControl1.Controls.Add(this.superTabControlPanel2);
             this.superTabControl1.Controls.Add(this.superTabControlPanel1);
+            this.superTabControl1.Controls.Add(this.superTabControlPanel2);
+            this.superTabControl1.Controls.Add(this.superTabControlPanel4);
             this.superTabControl1.Controls.Add(this.superTabControlPanel3);
             this.superTabControl1.ForeColor = System.Drawing.Color.Black;
             this.superTabControl1.Location = new System.Drawing.Point(1, 12);
@@ -859,8 +886,1183 @@ namespace Marx
             this.superTabControl1.Tabs.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.superTabItem1,
             this.superTabItem2,
-            this.superTabItem3});
+            this.superTabItem3,
+            this.superTabItem4});
             this.superTabControl1.Text = "superTabControl1";
+            // 
+            // superTabControlPanel1
+            // 
+            this.superTabControlPanel1.Controls.Add(this.pb_person);
+            this.superTabControlPanel1.Controls.Add(this.sw_t_phdTutor);
+            this.superTabControlPanel1.Controls.Add(this.groupPanel2);
+            this.superTabControlPanel1.Controls.Add(this.dtp_t_endTime);
+            this.superTabControlPanel1.Controls.Add(this.groupPanel1);
+            this.superTabControlPanel1.Controls.Add(this.dtp_t_initime);
+            this.superTabControlPanel1.Controls.Add(this.dtp_t_schoolTime);
+            this.superTabControlPanel1.Controls.Add(this.dtp_t_worktime);
+            this.superTabControlPanel1.Controls.Add(this.dtp_t_birthday);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_title);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_zhiwu);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_nation);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_gender);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_endSchool);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_hunyin);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_endDegree);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_inischool);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_endxueli);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_workLength);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_iniDegree);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_inixueli);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_email);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_zzmm);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_familyMember);
+            this.superTabControlPanel1.Controls.Add(this.labelX33);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_researchArea);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_subject);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_hukouaddress);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_homeAddress);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_jiaoyanshi);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_idcard);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_phone);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_xm);
+            this.superTabControlPanel1.Controls.Add(this.tb_t_gzz);
+            this.superTabControlPanel1.Controls.Add(this.labelX4);
+            this.superTabControlPanel1.Controls.Add(this.labelX5);
+            this.superTabControlPanel1.Controls.Add(this.labelX6);
+            this.superTabControlPanel1.Controls.Add(this.labelX10);
+            this.superTabControlPanel1.Controls.Add(this.labelX11);
+            this.superTabControlPanel1.Controls.Add(this.labelX7);
+            this.superTabControlPanel1.Controls.Add(this.labelX8);
+            this.superTabControlPanel1.Controls.Add(this.labelX14);
+            this.superTabControlPanel1.Controls.Add(this.labelX9);
+            this.superTabControlPanel1.Controls.Add(this.labelX15);
+            this.superTabControlPanel1.Controls.Add(this.labelX12);
+            this.superTabControlPanel1.Controls.Add(this.labelX16);
+            this.superTabControlPanel1.Controls.Add(this.labelX13);
+            this.superTabControlPanel1.Controls.Add(this.labelX25);
+            this.superTabControlPanel1.Controls.Add(this.labelX19);
+            this.superTabControlPanel1.Controls.Add(this.labelX29);
+            this.superTabControlPanel1.Controls.Add(this.labelX41);
+            this.superTabControlPanel1.Controls.Add(this.labelX26);
+            this.superTabControlPanel1.Controls.Add(this.labelX17);
+            this.superTabControlPanel1.Controls.Add(this.labelX30);
+            this.superTabControlPanel1.Controls.Add(this.labelX27);
+            this.superTabControlPanel1.Controls.Add(this.labelX28);
+            this.superTabControlPanel1.Controls.Add(this.labelX31);
+            this.superTabControlPanel1.Controls.Add(this.labelX20);
+            this.superTabControlPanel1.Controls.Add(this.labelX32);
+            this.superTabControlPanel1.Controls.Add(this.labelX24);
+            this.superTabControlPanel1.Controls.Add(this.labelX23);
+            this.superTabControlPanel1.Controls.Add(this.labelX21);
+            this.superTabControlPanel1.Controls.Add(this.labelX18);
+            this.superTabControlPanel1.Controls.Add(this.labelX22);
+            this.superTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel1.Location = new System.Drawing.Point(0, 26);
+            this.superTabControlPanel1.Name = "superTabControlPanel1";
+            this.superTabControlPanel1.Size = new System.Drawing.Size(1422, 718);
+            this.superTabControlPanel1.TabIndex = 1;
+            this.superTabControlPanel1.TabItem = this.superTabItem1;
+            // 
+            // pb_person
+            // 
+            this.pb_person.Location = new System.Drawing.Point(536, 428);
+            this.pb_person.Name = "pb_person";
+            this.pb_person.Size = new System.Drawing.Size(115, 153);
+            this.pb_person.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_person.TabIndex = 35;
+            this.pb_person.TabStop = false;
+            // 
+            // sw_t_phdTutor
+            // 
+            // 
+            // 
+            // 
+            this.sw_t_phdTutor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.sw_t_phdTutor.Location = new System.Drawing.Point(536, 322);
+            this.sw_t_phdTutor.Name = "sw_t_phdTutor";
+            this.sw_t_phdTutor.OffText = "否";
+            this.sw_t_phdTutor.OnText = "是";
+            this.sw_t_phdTutor.Size = new System.Drawing.Size(138, 22);
+            this.sw_t_phdTutor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.sw_t_phdTutor.SwitchWidth = 58;
+            this.sw_t_phdTutor.TabIndex = 25;
+            // 
+            // groupPanel2
+            // 
+            this.groupPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupPanel2.BackColor = System.Drawing.Color.Transparent;
+            this.groupPanel2.CanvasColor = System.Drawing.SystemColors.Control;
+            this.groupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel2.Controls.Add(this.dgv_qresult);
+            this.groupPanel2.DisabledBackColor = System.Drawing.Color.Empty;
+            this.groupPanel2.Location = new System.Drawing.Point(11, 176);
+            this.groupPanel2.Name = "groupPanel2";
+            this.groupPanel2.Size = new System.Drawing.Size(375, 528);
+            // 
+            // 
+            // 
+            this.groupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
+            this.groupPanel2.Style.BackColorGradientAngle = 90;
+            this.groupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.groupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel2.Style.BorderBottomWidth = 1;
+            this.groupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
+            this.groupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel2.Style.BorderLeftWidth = 1;
+            this.groupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel2.Style.BorderRightWidth = 1;
+            this.groupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel2.Style.BorderTopWidth = 1;
+            this.groupPanel2.Style.CornerDiameter = 4;
+            this.groupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
+            this.groupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
+            this.groupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            this.groupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
+            // 
+            // 
+            // 
+            this.groupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.groupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.groupPanel2.TabIndex = 2;
+            this.groupPanel2.Text = "检索结果";
+            // 
+            // dgv_qresult
+            // 
+            this.dgv_qresult.AllowUserToAddRows = false;
+            this.dgv_qresult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgv_qresult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_qresult.ContextMenuStrip = this.cms_dgvAction;
+            this.dgv_qresult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_qresult.Location = new System.Drawing.Point(0, 0);
+            this.dgv_qresult.Name = "dgv_qresult";
+            this.dgv_qresult.ReadOnly = true;
+            this.dgv_qresult.RowTemplate.Height = 23;
+            this.dgv_qresult.Size = new System.Drawing.Size(369, 507);
+            this.dgv_qresult.TabIndex = 0;
+            this.dgv_qresult.TabStop = false;
+            this.dgv_qresult.Click += new System.EventHandler(this.dgv_qresult_Click);
+            // 
+            // cms_dgvAction
+            // 
+            this.cms_dgvAction.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.删除ToolStripMenuItem});
+            this.cms_dgvAction.Name = "cms_dgvAction";
+            this.cms_dgvAction.Size = new System.Drawing.Size(143, 26);
+            // 
+            // 删除ToolStripMenuItem
+            // 
+            this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
+            this.删除ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.删除ToolStripMenuItem.Text = "删除";
+            this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
+            // 
+            // dtp_t_endTime
+            // 
+            this.dtp_t_endTime.Location = new System.Drawing.Point(881, 383);
+            this.dtp_t_endTime.Name = "dtp_t_endTime";
+            this.dtp_t_endTime.Size = new System.Drawing.Size(135, 20);
+            this.dtp_t_endTime.TabIndex = 33;
+            // 
+            // groupPanel1
+            // 
+            this.groupPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
+            this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.bt_jiansuo);
+            this.groupPanel1.Controls.Add(this.tb_sfzh);
+            this.groupPanel1.Controls.Add(this.tb_gzzh);
+            this.groupPanel1.Controls.Add(this.tb_xm);
+            this.groupPanel1.Controls.Add(this.labelX3);
+            this.groupPanel1.Controls.Add(this.labelX2);
+            this.groupPanel1.Controls.Add(this.labelX1);
+            this.groupPanel1.DisabledBackColor = System.Drawing.Color.Empty;
+            this.groupPanel1.Location = new System.Drawing.Point(17, 24);
+            this.groupPanel1.Name = "groupPanel1";
+            this.groupPanel1.Size = new System.Drawing.Size(369, 136);
+            // 
+            // 
+            // 
+            this.groupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
+            this.groupPanel1.Style.BackColorGradientAngle = 90;
+            this.groupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.groupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel1.Style.BorderBottomWidth = 1;
+            this.groupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
+            this.groupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel1.Style.BorderLeftWidth = 1;
+            this.groupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel1.Style.BorderRightWidth = 1;
+            this.groupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
+            this.groupPanel1.Style.BorderTopWidth = 1;
+            this.groupPanel1.Style.CornerDiameter = 4;
+            this.groupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
+            this.groupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
+            this.groupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            this.groupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
+            // 
+            // 
+            // 
+            this.groupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.groupPanel1.TabIndex = 1;
+            this.groupPanel1.Text = "输入检索条件";
+            // 
+            // bt_jiansuo
+            // 
+            this.bt_jiansuo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.bt_jiansuo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.bt_jiansuo.Location = new System.Drawing.Point(260, 16);
+            this.bt_jiansuo.Name = "bt_jiansuo";
+            this.bt_jiansuo.Size = new System.Drawing.Size(87, 83);
+            this.bt_jiansuo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.bt_jiansuo.TabIndex = 4;
+            this.bt_jiansuo.Text = "检索";
+            this.bt_jiansuo.Click += new System.EventHandler(this.bt_jiansuo_Click);
+            // 
+            // tb_sfzh
+            // 
+            this.tb_sfzh.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_sfzh.Border.Class = "TextBoxBorder";
+            this.tb_sfzh.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_sfzh.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_sfzh.ForeColor = System.Drawing.Color.Black;
+            this.tb_sfzh.Location = new System.Drawing.Point(76, 79);
+            this.tb_sfzh.Name = "tb_sfzh";
+            this.tb_sfzh.PreventEnterBeep = true;
+            this.tb_sfzh.Size = new System.Drawing.Size(169, 20);
+            this.tb_sfzh.TabIndex = 3;
+            // 
+            // tb_gzzh
+            // 
+            this.tb_gzzh.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_gzzh.Border.Class = "TextBoxBorder";
+            this.tb_gzzh.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_gzzh.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_gzzh.ForeColor = System.Drawing.Color.Black;
+            this.tb_gzzh.Location = new System.Drawing.Point(76, 48);
+            this.tb_gzzh.Name = "tb_gzzh";
+            this.tb_gzzh.PreventEnterBeep = true;
+            this.tb_gzzh.Size = new System.Drawing.Size(169, 20);
+            this.tb_gzzh.TabIndex = 2;
+            // 
+            // tb_xm
+            // 
+            this.tb_xm.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_xm.Border.Class = "TextBoxBorder";
+            this.tb_xm.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_xm.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_xm.ForeColor = System.Drawing.Color.Black;
+            this.tb_xm.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.tb_xm.Location = new System.Drawing.Point(76, 17);
+            this.tb_xm.Name = "tb_xm";
+            this.tb_xm.PreventEnterBeep = true;
+            this.tb_xm.Size = new System.Drawing.Size(169, 20);
+            this.tb_xm.TabIndex = 1;
+            // 
+            // labelX3
+            // 
+            this.labelX3.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX3.Location = new System.Drawing.Point(11, 78);
+            this.labelX3.Name = "labelX3";
+            this.labelX3.Size = new System.Drawing.Size(75, 23);
+            this.labelX3.TabIndex = 0;
+            this.labelX3.Text = "身份证号：";
+            // 
+            // labelX2
+            // 
+            this.labelX2.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(11, 47);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(75, 23);
+            this.labelX2.TabIndex = 0;
+            this.labelX2.Text = "工作证号：";
+            // 
+            // labelX1
+            // 
+            this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.Location = new System.Drawing.Point(11, 16);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(75, 23);
+            this.labelX1.TabIndex = 0;
+            this.labelX1.Text = "姓    名：";
+            // 
+            // dtp_t_initime
+            // 
+            this.dtp_t_initime.Location = new System.Drawing.Point(881, 355);
+            this.dtp_t_initime.Name = "dtp_t_initime";
+            this.dtp_t_initime.Size = new System.Drawing.Size(135, 20);
+            this.dtp_t_initime.TabIndex = 29;
+            // 
+            // dtp_t_schoolTime
+            // 
+            this.dtp_t_schoolTime.Location = new System.Drawing.Point(1147, 122);
+            this.dtp_t_schoolTime.Name = "dtp_t_schoolTime";
+            this.dtp_t_schoolTime.Size = new System.Drawing.Size(250, 20);
+            this.dtp_t_schoolTime.TabIndex = 16;
+            // 
+            // dtp_t_worktime
+            // 
+            this.dtp_t_worktime.Location = new System.Drawing.Point(1147, 93);
+            this.dtp_t_worktime.Name = "dtp_t_worktime";
+            this.dtp_t_worktime.Size = new System.Drawing.Size(250, 20);
+            this.dtp_t_worktime.TabIndex = 13;
+            // 
+            // dtp_t_birthday
+            // 
+            this.dtp_t_birthday.Location = new System.Drawing.Point(789, 93);
+            this.dtp_t_birthday.Name = "dtp_t_birthday";
+            this.dtp_t_birthday.Size = new System.Drawing.Size(250, 20);
+            this.dtp_t_birthday.TabIndex = 12;
+            // 
+            // tb_t_title
+            // 
+            this.tb_t_title.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_title.Border.Class = "TextBoxBorder";
+            this.tb_t_title.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_title.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_title.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_title.Location = new System.Drawing.Point(536, 151);
+            this.tb_t_title.Name = "tb_t_title";
+            this.tb_t_title.PreventEnterBeep = true;
+            this.tb_t_title.Size = new System.Drawing.Size(138, 20);
+            this.tb_t_title.TabIndex = 17;
+            // 
+            // tb_t_zhiwu
+            // 
+            this.tb_t_zhiwu.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_zhiwu.Border.Class = "TextBoxBorder";
+            this.tb_t_zhiwu.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_zhiwu.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_zhiwu.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_zhiwu.Location = new System.Drawing.Point(536, 122);
+            this.tb_t_zhiwu.Name = "tb_t_zhiwu";
+            this.tb_t_zhiwu.PreventEnterBeep = true;
+            this.tb_t_zhiwu.Size = new System.Drawing.Size(138, 20);
+            this.tb_t_zhiwu.TabIndex = 14;
+            // 
+            // tb_t_nation
+            // 
+            this.tb_t_nation.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_nation.Border.Class = "TextBoxBorder";
+            this.tb_t_nation.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_nation.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_nation.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_nation.Location = new System.Drawing.Point(536, 93);
+            this.tb_t_nation.Name = "tb_t_nation";
+            this.tb_t_nation.PreventEnterBeep = true;
+            this.tb_t_nation.Size = new System.Drawing.Size(138, 20);
+            this.tb_t_nation.TabIndex = 11;
+            // 
+            // tb_t_gender
+            // 
+            this.tb_t_gender.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_gender.Border.Class = "TextBoxBorder";
+            this.tb_t_gender.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_gender.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_gender.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_gender.Location = new System.Drawing.Point(536, 64);
+            this.tb_t_gender.Name = "tb_t_gender";
+            this.tb_t_gender.PreventEnterBeep = true;
+            this.tb_t_gender.Size = new System.Drawing.Size(138, 20);
+            this.tb_t_gender.TabIndex = 8;
+            // 
+            // tb_t_endSchool
+            // 
+            this.tb_t_endSchool.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_endSchool.Border.Class = "TextBoxBorder";
+            this.tb_t_endSchool.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_endSchool.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_endSchool.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_endSchool.Location = new System.Drawing.Point(1103, 383);
+            this.tb_t_endSchool.Name = "tb_t_endSchool";
+            this.tb_t_endSchool.PreventEnterBeep = true;
+            this.tb_t_endSchool.Size = new System.Drawing.Size(294, 20);
+            this.tb_t_endSchool.TabIndex = 34;
+            // 
+            // tb_t_hunyin
+            // 
+            this.tb_t_hunyin.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_hunyin.Border.Class = "TextBoxBorder";
+            this.tb_t_hunyin.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_hunyin.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_hunyin.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_hunyin.Location = new System.Drawing.Point(1147, 151);
+            this.tb_t_hunyin.Name = "tb_t_hunyin";
+            this.tb_t_hunyin.PreventEnterBeep = true;
+            this.tb_t_hunyin.Size = new System.Drawing.Size(250, 20);
+            this.tb_t_hunyin.TabIndex = 19;
+            // 
+            // tb_t_endDegree
+            // 
+            this.tb_t_endDegree.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_endDegree.Border.Class = "TextBoxBorder";
+            this.tb_t_endDegree.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_endDegree.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_endDegree.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_endDegree.Location = new System.Drawing.Point(708, 383);
+            this.tb_t_endDegree.Name = "tb_t_endDegree";
+            this.tb_t_endDegree.PreventEnterBeep = true;
+            this.tb_t_endDegree.Size = new System.Drawing.Size(93, 20);
+            this.tb_t_endDegree.TabIndex = 32;
+            // 
+            // tb_t_inischool
+            // 
+            this.tb_t_inischool.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_inischool.Border.Class = "TextBoxBorder";
+            this.tb_t_inischool.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_inischool.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_inischool.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_inischool.Location = new System.Drawing.Point(1103, 355);
+            this.tb_t_inischool.Name = "tb_t_inischool";
+            this.tb_t_inischool.PreventEnterBeep = true;
+            this.tb_t_inischool.Size = new System.Drawing.Size(294, 20);
+            this.tb_t_inischool.TabIndex = 30;
+            // 
+            // tb_t_endxueli
+            // 
+            this.tb_t_endxueli.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_endxueli.Border.Class = "TextBoxBorder";
+            this.tb_t_endxueli.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_endxueli.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_endxueli.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_endxueli.Location = new System.Drawing.Point(536, 383);
+            this.tb_t_endxueli.Name = "tb_t_endxueli";
+            this.tb_t_endxueli.PreventEnterBeep = true;
+            this.tb_t_endxueli.Size = new System.Drawing.Size(93, 20);
+            this.tb_t_endxueli.TabIndex = 31;
+            // 
+            // tb_t_workLength
+            // 
+            this.tb_t_workLength.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_workLength.Border.Class = "TextBoxBorder";
+            this.tb_t_workLength.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_workLength.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_workLength.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_workLength.Location = new System.Drawing.Point(769, 323);
+            this.tb_t_workLength.Name = "tb_t_workLength";
+            this.tb_t_workLength.PreventEnterBeep = true;
+            this.tb_t_workLength.Size = new System.Drawing.Size(93, 20);
+            this.tb_t_workLength.TabIndex = 26;
+            // 
+            // tb_t_iniDegree
+            // 
+            this.tb_t_iniDegree.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_iniDegree.Border.Class = "TextBoxBorder";
+            this.tb_t_iniDegree.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_iniDegree.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_iniDegree.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_iniDegree.Location = new System.Drawing.Point(708, 355);
+            this.tb_t_iniDegree.Name = "tb_t_iniDegree";
+            this.tb_t_iniDegree.PreventEnterBeep = true;
+            this.tb_t_iniDegree.Size = new System.Drawing.Size(93, 20);
+            this.tb_t_iniDegree.TabIndex = 28;
+            // 
+            // tb_t_inixueli
+            // 
+            this.tb_t_inixueli.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_inixueli.Border.Class = "TextBoxBorder";
+            this.tb_t_inixueli.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_inixueli.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_inixueli.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_inixueli.Location = new System.Drawing.Point(536, 355);
+            this.tb_t_inixueli.Name = "tb_t_inixueli";
+            this.tb_t_inixueli.PreventEnterBeep = true;
+            this.tb_t_inixueli.Size = new System.Drawing.Size(93, 20);
+            this.tb_t_inixueli.TabIndex = 27;
+            // 
+            // tb_t_email
+            // 
+            this.tb_t_email.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_email.Border.Class = "TextBoxBorder";
+            this.tb_t_email.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_email.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_email.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_email.Location = new System.Drawing.Point(789, 151);
+            this.tb_t_email.Name = "tb_t_email";
+            this.tb_t_email.PreventEnterBeep = true;
+            this.tb_t_email.Size = new System.Drawing.Size(250, 20);
+            this.tb_t_email.TabIndex = 18;
+            // 
+            // tb_t_zzmm
+            // 
+            this.tb_t_zzmm.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_zzmm.Border.Class = "TextBoxBorder";
+            this.tb_t_zzmm.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_zzmm.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_zzmm.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_zzmm.Location = new System.Drawing.Point(789, 122);
+            this.tb_t_zzmm.Name = "tb_t_zzmm";
+            this.tb_t_zzmm.PreventEnterBeep = true;
+            this.tb_t_zzmm.Size = new System.Drawing.Size(250, 20);
+            this.tb_t_zzmm.TabIndex = 15;
+            // 
+            // tb_t_familyMember
+            // 
+            this.tb_t_familyMember.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_familyMember.Border.Class = "TextBoxBorder";
+            this.tb_t_familyMember.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_familyMember.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_familyMember.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_familyMember.Location = new System.Drawing.Point(536, 291);
+            this.tb_t_familyMember.Name = "tb_t_familyMember";
+            this.tb_t_familyMember.PreventEnterBeep = true;
+            this.tb_t_familyMember.Size = new System.Drawing.Size(861, 20);
+            this.tb_t_familyMember.TabIndex = 24;
+            // 
+            // labelX33
+            // 
+            // 
+            // 
+            // 
+            this.labelX33.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX33.Location = new System.Drawing.Point(708, 322);
+            this.labelX33.Name = "labelX33";
+            this.labelX33.Size = new System.Drawing.Size(75, 23);
+            this.labelX33.TabIndex = 3;
+            this.labelX33.Text = "工作年限：";
+            // 
+            // tb_t_researchArea
+            // 
+            this.tb_t_researchArea.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_researchArea.Border.Class = "TextBoxBorder";
+            this.tb_t_researchArea.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_researchArea.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_researchArea.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_researchArea.Location = new System.Drawing.Point(536, 264);
+            this.tb_t_researchArea.Name = "tb_t_researchArea";
+            this.tb_t_researchArea.PreventEnterBeep = true;
+            this.tb_t_researchArea.Size = new System.Drawing.Size(861, 20);
+            this.tb_t_researchArea.TabIndex = 23;
+            // 
+            // tb_t_subject
+            // 
+            this.tb_t_subject.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_subject.Border.Class = "TextBoxBorder";
+            this.tb_t_subject.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_subject.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_subject.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_subject.Location = new System.Drawing.Point(536, 236);
+            this.tb_t_subject.Name = "tb_t_subject";
+            this.tb_t_subject.PreventEnterBeep = true;
+            this.tb_t_subject.Size = new System.Drawing.Size(861, 20);
+            this.tb_t_subject.TabIndex = 22;
+            // 
+            // tb_t_hukouaddress
+            // 
+            this.tb_t_hukouaddress.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_hukouaddress.Border.Class = "TextBoxBorder";
+            this.tb_t_hukouaddress.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_hukouaddress.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_hukouaddress.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_hukouaddress.Location = new System.Drawing.Point(536, 208);
+            this.tb_t_hukouaddress.Name = "tb_t_hukouaddress";
+            this.tb_t_hukouaddress.PreventEnterBeep = true;
+            this.tb_t_hukouaddress.Size = new System.Drawing.Size(861, 20);
+            this.tb_t_hukouaddress.TabIndex = 21;
+            // 
+            // tb_t_homeAddress
+            // 
+            this.tb_t_homeAddress.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_homeAddress.Border.Class = "TextBoxBorder";
+            this.tb_t_homeAddress.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_homeAddress.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_homeAddress.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_homeAddress.Location = new System.Drawing.Point(536, 180);
+            this.tb_t_homeAddress.Name = "tb_t_homeAddress";
+            this.tb_t_homeAddress.PreventEnterBeep = true;
+            this.tb_t_homeAddress.Size = new System.Drawing.Size(861, 20);
+            this.tb_t_homeAddress.TabIndex = 20;
+            // 
+            // tb_t_jiaoyanshi
+            // 
+            this.tb_t_jiaoyanshi.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_jiaoyanshi.Border.Class = "TextBoxBorder";
+            this.tb_t_jiaoyanshi.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_jiaoyanshi.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_jiaoyanshi.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_jiaoyanshi.Location = new System.Drawing.Point(1147, 64);
+            this.tb_t_jiaoyanshi.Name = "tb_t_jiaoyanshi";
+            this.tb_t_jiaoyanshi.PreventEnterBeep = true;
+            this.tb_t_jiaoyanshi.Size = new System.Drawing.Size(250, 20);
+            this.tb_t_jiaoyanshi.TabIndex = 10;
+            // 
+            // tb_t_idcard
+            // 
+            this.tb_t_idcard.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_idcard.Border.Class = "TextBoxBorder";
+            this.tb_t_idcard.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_idcard.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_idcard.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_idcard.Location = new System.Drawing.Point(789, 64);
+            this.tb_t_idcard.Name = "tb_t_idcard";
+            this.tb_t_idcard.PreventEnterBeep = true;
+            this.tb_t_idcard.Size = new System.Drawing.Size(250, 20);
+            this.tb_t_idcard.TabIndex = 9;
+            // 
+            // tb_t_phone
+            // 
+            this.tb_t_phone.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_phone.Border.Class = "TextBoxBorder";
+            this.tb_t_phone.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_phone.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_phone.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_phone.Location = new System.Drawing.Point(1147, 35);
+            this.tb_t_phone.Name = "tb_t_phone";
+            this.tb_t_phone.PreventEnterBeep = true;
+            this.tb_t_phone.Size = new System.Drawing.Size(250, 20);
+            this.tb_t_phone.TabIndex = 7;
+            // 
+            // tb_t_xm
+            // 
+            this.tb_t_xm.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_xm.Border.Class = "TextBoxBorder";
+            this.tb_t_xm.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_xm.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_xm.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_xm.Location = new System.Drawing.Point(536, 35);
+            this.tb_t_xm.Name = "tb_t_xm";
+            this.tb_t_xm.PreventEnterBeep = true;
+            this.tb_t_xm.Size = new System.Drawing.Size(138, 20);
+            this.tb_t_xm.TabIndex = 5;
+            // 
+            // tb_t_gzz
+            // 
+            this.tb_t_gzz.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_t_gzz.Border.Class = "TextBoxBorder";
+            this.tb_t_gzz.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_t_gzz.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_t_gzz.ForeColor = System.Drawing.Color.Black;
+            this.tb_t_gzz.Location = new System.Drawing.Point(789, 35);
+            this.tb_t_gzz.Name = "tb_t_gzz";
+            this.tb_t_gzz.PreventEnterBeep = true;
+            this.tb_t_gzz.Size = new System.Drawing.Size(250, 20);
+            this.tb_t_gzz.TabIndex = 6;
+            // 
+            // labelX4
+            // 
+            this.labelX4.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX4.Location = new System.Drawing.Point(495, 34);
+            this.labelX4.Name = "labelX4";
+            this.labelX4.Size = new System.Drawing.Size(75, 23);
+            this.labelX4.TabIndex = 0;
+            this.labelX4.Text = "姓名：";
+            // 
+            // labelX5
+            // 
+            this.labelX5.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX5.Location = new System.Drawing.Point(495, 63);
+            this.labelX5.Name = "labelX5";
+            this.labelX5.Size = new System.Drawing.Size(75, 23);
+            this.labelX5.TabIndex = 1;
+            this.labelX5.Text = "性别：";
+            // 
+            // labelX6
+            // 
+            this.labelX6.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX6.Location = new System.Drawing.Point(495, 92);
+            this.labelX6.Name = "labelX6";
+            this.labelX6.Size = new System.Drawing.Size(75, 23);
+            this.labelX6.TabIndex = 2;
+            this.labelX6.Text = "民族：";
+            // 
+            // labelX10
+            // 
+            this.labelX10.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX10.Location = new System.Drawing.Point(495, 121);
+            this.labelX10.Name = "labelX10";
+            this.labelX10.Size = new System.Drawing.Size(75, 23);
+            this.labelX10.TabIndex = 2;
+            this.labelX10.Text = "职务：";
+            // 
+            // labelX11
+            // 
+            this.labelX11.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX11.Location = new System.Drawing.Point(495, 150);
+            this.labelX11.Name = "labelX11";
+            this.labelX11.Size = new System.Drawing.Size(75, 23);
+            this.labelX11.TabIndex = 2;
+            this.labelX11.Text = "职称：";
+            // 
+            // labelX7
+            // 
+            this.labelX7.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX7.Location = new System.Drawing.Point(726, 34);
+            this.labelX7.Name = "labelX7";
+            this.labelX7.Size = new System.Drawing.Size(75, 23);
+            this.labelX7.TabIndex = 3;
+            this.labelX7.Text = "工作证号：";
+            // 
+            // labelX8
+            // 
+            this.labelX8.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX8.Location = new System.Drawing.Point(726, 63);
+            this.labelX8.Name = "labelX8";
+            this.labelX8.Size = new System.Drawing.Size(75, 23);
+            this.labelX8.TabIndex = 3;
+            this.labelX8.Text = "身份证号：";
+            // 
+            // labelX14
+            // 
+            this.labelX14.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX14.Location = new System.Drawing.Point(1084, 34);
+            this.labelX14.Name = "labelX14";
+            this.labelX14.Size = new System.Drawing.Size(75, 23);
+            this.labelX14.TabIndex = 3;
+            this.labelX14.Text = "联系电话：";
+            // 
+            // labelX9
+            // 
+            this.labelX9.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX9.Location = new System.Drawing.Point(726, 92);
+            this.labelX9.Name = "labelX9";
+            this.labelX9.Size = new System.Drawing.Size(75, 23);
+            this.labelX9.TabIndex = 3;
+            this.labelX9.Text = "出生时间：";
+            // 
+            // labelX15
+            // 
+            this.labelX15.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX15.Location = new System.Drawing.Point(1084, 63);
+            this.labelX15.Name = "labelX15";
+            this.labelX15.Size = new System.Drawing.Size(75, 23);
+            this.labelX15.TabIndex = 3;
+            this.labelX15.Text = "教 研 室：";
+            // 
+            // labelX12
+            // 
+            this.labelX12.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX12.Location = new System.Drawing.Point(726, 121);
+            this.labelX12.Name = "labelX12";
+            this.labelX12.Size = new System.Drawing.Size(75, 23);
+            this.labelX12.TabIndex = 3;
+            this.labelX12.Text = "政治面貌：";
+            // 
+            // labelX16
+            // 
+            this.labelX16.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX16.Location = new System.Drawing.Point(1084, 92);
+            this.labelX16.Name = "labelX16";
+            this.labelX16.Size = new System.Drawing.Size(75, 23);
+            this.labelX16.TabIndex = 3;
+            this.labelX16.Text = "工作时间：";
+            // 
+            // labelX13
+            // 
+            this.labelX13.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX13.Location = new System.Drawing.Point(726, 150);
+            this.labelX13.Name = "labelX13";
+            this.labelX13.Size = new System.Drawing.Size(75, 23);
+            this.labelX13.TabIndex = 3;
+            this.labelX13.Text = "电子信箱：";
+            // 
+            // labelX25
+            // 
+            this.labelX25.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX25.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX25.Location = new System.Drawing.Point(469, 354);
+            this.labelX25.Name = "labelX25";
+            this.labelX25.Size = new System.Drawing.Size(75, 23);
+            this.labelX25.TabIndex = 3;
+            this.labelX25.Text = "初始学历：";
+            // 
+            // labelX19
+            // 
+            this.labelX19.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX19.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX19.Location = new System.Drawing.Point(473, 179);
+            this.labelX19.Name = "labelX19";
+            this.labelX19.Size = new System.Drawing.Size(75, 23);
+            this.labelX19.TabIndex = 3;
+            this.labelX19.Text = "家庭住址：";
+            // 
+            // labelX29
+            // 
+            this.labelX29.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX29.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX29.Location = new System.Drawing.Point(469, 382);
+            this.labelX29.Name = "labelX29";
+            this.labelX29.Size = new System.Drawing.Size(75, 23);
+            this.labelX29.TabIndex = 3;
+            this.labelX29.Text = "最后学历：";
+            // 
+            // labelX41
+            // 
+            this.labelX41.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX41.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX41.Location = new System.Drawing.Point(455, 484);
+            this.labelX41.Name = "labelX41";
+            this.labelX41.Size = new System.Drawing.Size(75, 23);
+            this.labelX41.TabIndex = 3;
+            this.labelX41.Text = "个人照片：";
+            // 
+            // labelX26
+            // 
+            this.labelX26.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX26.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX26.Location = new System.Drawing.Point(647, 354);
+            this.labelX26.Name = "labelX26";
+            this.labelX26.Size = new System.Drawing.Size(75, 23);
+            this.labelX26.TabIndex = 3;
+            this.labelX26.Text = "初始学位：";
+            // 
+            // labelX17
+            // 
+            this.labelX17.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX17.Location = new System.Drawing.Point(1084, 121);
+            this.labelX17.Name = "labelX17";
+            this.labelX17.Size = new System.Drawing.Size(75, 23);
+            this.labelX17.TabIndex = 3;
+            this.labelX17.Text = "来校时间：";
+            // 
+            // labelX30
+            // 
+            this.labelX30.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX30.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX30.Location = new System.Drawing.Point(647, 382);
+            this.labelX30.Name = "labelX30";
+            this.labelX30.Size = new System.Drawing.Size(75, 23);
+            this.labelX30.TabIndex = 3;
+            this.labelX30.Text = "最后学位：";
+            // 
+            // labelX27
+            // 
+            this.labelX27.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX27.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX27.Location = new System.Drawing.Point(817, 354);
+            this.labelX27.Name = "labelX27";
+            this.labelX27.Size = new System.Drawing.Size(75, 23);
+            this.labelX27.TabIndex = 3;
+            this.labelX27.Text = "毕业时间：";
+            // 
+            // labelX28
+            // 
+            this.labelX28.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX28.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX28.Location = new System.Drawing.Point(1036, 354);
+            this.labelX28.Name = "labelX28";
+            this.labelX28.Size = new System.Drawing.Size(75, 23);
+            this.labelX28.TabIndex = 3;
+            this.labelX28.Text = "毕业学校：";
+            // 
+            // labelX31
+            // 
+            this.labelX31.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX31.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX31.Location = new System.Drawing.Point(817, 382);
+            this.labelX31.Name = "labelX31";
+            this.labelX31.Size = new System.Drawing.Size(75, 23);
+            this.labelX31.TabIndex = 3;
+            this.labelX31.Text = "毕业时间：";
+            // 
+            // labelX20
+            // 
+            this.labelX20.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX20.Location = new System.Drawing.Point(473, 207);
+            this.labelX20.Name = "labelX20";
+            this.labelX20.Size = new System.Drawing.Size(75, 23);
+            this.labelX20.TabIndex = 3;
+            this.labelX20.Text = "户口地址：";
+            // 
+            // labelX32
+            // 
+            this.labelX32.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX32.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX32.Location = new System.Drawing.Point(1036, 382);
+            this.labelX32.Name = "labelX32";
+            this.labelX32.Size = new System.Drawing.Size(75, 23);
+            this.labelX32.TabIndex = 3;
+            this.labelX32.Text = "毕业学校：";
+            // 
+            // labelX24
+            // 
+            this.labelX24.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX24.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX24.Location = new System.Drawing.Point(457, 322);
+            this.labelX24.Name = "labelX24";
+            this.labelX24.Size = new System.Drawing.Size(88, 23);
+            this.labelX24.TabIndex = 3;
+            this.labelX24.Text = "是否为博导：";
+            // 
+            // labelX23
+            // 
+            this.labelX23.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX23.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX23.Location = new System.Drawing.Point(446, 290);
+            this.labelX23.Name = "labelX23";
+            this.labelX23.Size = new System.Drawing.Size(95, 23);
+            this.labelX23.TabIndex = 3;
+            this.labelX23.Text = "家庭主要成员：";
+            // 
+            // labelX21
+            // 
+            this.labelX21.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX21.Location = new System.Drawing.Point(412, 235);
+            this.labelX21.Name = "labelX21";
+            this.labelX21.Size = new System.Drawing.Size(136, 23);
+            this.labelX21.TabIndex = 3;
+            this.labelX21.Text = "现主要从事学科门类：";
+            // 
+            // labelX18
+            // 
+            this.labelX18.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX18.Location = new System.Drawing.Point(1084, 150);
+            this.labelX18.Name = "labelX18";
+            this.labelX18.Size = new System.Drawing.Size(75, 23);
+            this.labelX18.TabIndex = 3;
+            this.labelX18.Text = "婚姻状况：";
+            // 
+            // labelX22
+            // 
+            this.labelX22.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX22.Location = new System.Drawing.Point(434, 263);
+            this.labelX22.Name = "labelX22";
+            this.labelX22.Size = new System.Drawing.Size(136, 23);
+            this.labelX22.TabIndex = 3;
+            this.labelX22.Text = "教学和研究方向：";
+            // 
+            // superTabItem1
+            // 
+            this.superTabItem1.AttachedControl = this.superTabControlPanel1;
+            this.superTabItem1.GlobalItem = false;
+            this.superTabItem1.Name = "superTabItem1";
+            this.superTabItem1.Text = "信息检索";
+            // 
+            // superTabControlPanel4
+            // 
+            this.superTabControlPanel4.Controls.Add(this.axdoc_main);
+            this.superTabControlPanel4.Controls.Add(this.button1);
+            this.superTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel4.Location = new System.Drawing.Point(0, 26);
+            this.superTabControlPanel4.Name = "superTabControlPanel4";
+            this.superTabControlPanel4.Size = new System.Drawing.Size(1422, 718);
+            this.superTabControlPanel4.TabIndex = 0;
+            this.superTabControlPanel4.TabItem = this.superTabItem4;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(100, 120);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(114, 53);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // superTabItem4
+            // 
+            this.superTabItem4.AttachedControl = this.superTabControlPanel4;
+            this.superTabItem4.GlobalItem = false;
+            this.superTabItem4.Name = "superTabItem4";
+            this.superTabItem4.Text = "superTabItem4";
             // 
             // superTabControlPanel2
             // 
@@ -2279,1152 +3481,6 @@ namespace Marx
             this.superTabItem3.Name = "superTabItem3";
             this.superTabItem3.Text = "信息统计";
             // 
-            // superTabControlPanel1
-            // 
-            this.superTabControlPanel1.Controls.Add(this.pb_person);
-            this.superTabControlPanel1.Controls.Add(this.sw_t_phdTutor);
-            this.superTabControlPanel1.Controls.Add(this.groupPanel2);
-            this.superTabControlPanel1.Controls.Add(this.dtp_t_endTime);
-            this.superTabControlPanel1.Controls.Add(this.groupPanel1);
-            this.superTabControlPanel1.Controls.Add(this.dtp_t_initime);
-            this.superTabControlPanel1.Controls.Add(this.dtp_t_schoolTime);
-            this.superTabControlPanel1.Controls.Add(this.dtp_t_worktime);
-            this.superTabControlPanel1.Controls.Add(this.dtp_t_birthday);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_title);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_zhiwu);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_nation);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_gender);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_endSchool);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_hunyin);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_endDegree);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_inischool);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_endxueli);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_workLength);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_iniDegree);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_inixueli);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_email);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_zzmm);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_familyMember);
-            this.superTabControlPanel1.Controls.Add(this.labelX33);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_researchArea);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_subject);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_hukouaddress);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_homeAddress);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_jiaoyanshi);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_idcard);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_phone);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_xm);
-            this.superTabControlPanel1.Controls.Add(this.tb_t_gzz);
-            this.superTabControlPanel1.Controls.Add(this.labelX4);
-            this.superTabControlPanel1.Controls.Add(this.labelX5);
-            this.superTabControlPanel1.Controls.Add(this.labelX6);
-            this.superTabControlPanel1.Controls.Add(this.labelX10);
-            this.superTabControlPanel1.Controls.Add(this.labelX11);
-            this.superTabControlPanel1.Controls.Add(this.labelX7);
-            this.superTabControlPanel1.Controls.Add(this.labelX8);
-            this.superTabControlPanel1.Controls.Add(this.labelX14);
-            this.superTabControlPanel1.Controls.Add(this.labelX9);
-            this.superTabControlPanel1.Controls.Add(this.labelX15);
-            this.superTabControlPanel1.Controls.Add(this.labelX12);
-            this.superTabControlPanel1.Controls.Add(this.labelX16);
-            this.superTabControlPanel1.Controls.Add(this.labelX13);
-            this.superTabControlPanel1.Controls.Add(this.labelX25);
-            this.superTabControlPanel1.Controls.Add(this.labelX19);
-            this.superTabControlPanel1.Controls.Add(this.labelX29);
-            this.superTabControlPanel1.Controls.Add(this.labelX41);
-            this.superTabControlPanel1.Controls.Add(this.labelX26);
-            this.superTabControlPanel1.Controls.Add(this.labelX17);
-            this.superTabControlPanel1.Controls.Add(this.labelX30);
-            this.superTabControlPanel1.Controls.Add(this.labelX27);
-            this.superTabControlPanel1.Controls.Add(this.labelX28);
-            this.superTabControlPanel1.Controls.Add(this.labelX31);
-            this.superTabControlPanel1.Controls.Add(this.labelX20);
-            this.superTabControlPanel1.Controls.Add(this.labelX32);
-            this.superTabControlPanel1.Controls.Add(this.labelX24);
-            this.superTabControlPanel1.Controls.Add(this.labelX23);
-            this.superTabControlPanel1.Controls.Add(this.labelX21);
-            this.superTabControlPanel1.Controls.Add(this.labelX18);
-            this.superTabControlPanel1.Controls.Add(this.labelX22);
-            this.superTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel1.Location = new System.Drawing.Point(0, 26);
-            this.superTabControlPanel1.Name = "superTabControlPanel1";
-            this.superTabControlPanel1.Size = new System.Drawing.Size(1422, 718);
-            this.superTabControlPanel1.TabIndex = 1;
-            this.superTabControlPanel1.TabItem = this.superTabItem1;
-            // 
-            // pb_person
-            // 
-            this.pb_person.Location = new System.Drawing.Point(536, 428);
-            this.pb_person.Name = "pb_person";
-            this.pb_person.Size = new System.Drawing.Size(115, 153);
-            this.pb_person.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pb_person.TabIndex = 35;
-            this.pb_person.TabStop = false;
-            // 
-            // sw_t_phdTutor
-            // 
-            // 
-            // 
-            // 
-            this.sw_t_phdTutor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.sw_t_phdTutor.Location = new System.Drawing.Point(536, 322);
-            this.sw_t_phdTutor.Name = "sw_t_phdTutor";
-            this.sw_t_phdTutor.OffText = "否";
-            this.sw_t_phdTutor.OnText = "是";
-            this.sw_t_phdTutor.Size = new System.Drawing.Size(138, 22);
-            this.sw_t_phdTutor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.sw_t_phdTutor.SwitchWidth = 58;
-            this.sw_t_phdTutor.TabIndex = 25;
-            // 
-            // groupPanel2
-            // 
-            this.groupPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupPanel2.BackColor = System.Drawing.Color.Transparent;
-            this.groupPanel2.CanvasColor = System.Drawing.SystemColors.Control;
-            this.groupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.groupPanel2.Controls.Add(this.dgv_qresult);
-            this.groupPanel2.DisabledBackColor = System.Drawing.Color.Empty;
-            this.groupPanel2.Location = new System.Drawing.Point(11, 176);
-            this.groupPanel2.Name = "groupPanel2";
-            this.groupPanel2.Size = new System.Drawing.Size(375, 528);
-            // 
-            // 
-            // 
-            this.groupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.groupPanel2.Style.BackColorGradientAngle = 90;
-            this.groupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.groupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel2.Style.BorderBottomWidth = 1;
-            this.groupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.groupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel2.Style.BorderLeftWidth = 1;
-            this.groupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel2.Style.BorderRightWidth = 1;
-            this.groupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel2.Style.BorderTopWidth = 1;
-            this.groupPanel2.Style.CornerDiameter = 4;
-            this.groupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
-            this.groupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
-            this.groupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.groupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
-            // 
-            // 
-            // 
-            this.groupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            // 
-            // 
-            // 
-            this.groupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.groupPanel2.TabIndex = 2;
-            this.groupPanel2.Text = "检索结果";
-            // 
-            // dgv_qresult
-            // 
-            this.dgv_qresult.AllowUserToAddRows = false;
-            this.dgv_qresult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgv_qresult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_qresult.ContextMenuStrip = this.cms_dgvAction;
-            this.dgv_qresult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_qresult.Location = new System.Drawing.Point(0, 0);
-            this.dgv_qresult.Name = "dgv_qresult";
-            this.dgv_qresult.ReadOnly = true;
-            this.dgv_qresult.RowTemplate.Height = 23;
-            this.dgv_qresult.Size = new System.Drawing.Size(369, 507);
-            this.dgv_qresult.TabIndex = 0;
-            this.dgv_qresult.TabStop = false;
-            this.dgv_qresult.Click += new System.EventHandler(this.dgv_qresult_Click);
-            // 
-            // cms_dgvAction
-            // 
-            this.cms_dgvAction.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.删除ToolStripMenuItem});
-            this.cms_dgvAction.Name = "cms_dgvAction";
-            this.cms_dgvAction.Size = new System.Drawing.Size(143, 26);
-            // 
-            // 删除ToolStripMenuItem
-            // 
-            this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
-            this.删除ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.删除ToolStripMenuItem.Text = "删除";
-            this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
-            // 
-            // dtp_t_endTime
-            // 
-            this.dtp_t_endTime.Location = new System.Drawing.Point(881, 383);
-            this.dtp_t_endTime.Name = "dtp_t_endTime";
-            this.dtp_t_endTime.Size = new System.Drawing.Size(135, 20);
-            this.dtp_t_endTime.TabIndex = 33;
-            // 
-            // groupPanel1
-            // 
-            this.groupPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
-            this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.groupPanel1.Controls.Add(this.bt_jiansuo);
-            this.groupPanel1.Controls.Add(this.tb_sfzh);
-            this.groupPanel1.Controls.Add(this.tb_gzzh);
-            this.groupPanel1.Controls.Add(this.tb_xm);
-            this.groupPanel1.Controls.Add(this.labelX3);
-            this.groupPanel1.Controls.Add(this.labelX2);
-            this.groupPanel1.Controls.Add(this.labelX1);
-            this.groupPanel1.DisabledBackColor = System.Drawing.Color.Empty;
-            this.groupPanel1.Location = new System.Drawing.Point(17, 24);
-            this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(369, 136);
-            // 
-            // 
-            // 
-            this.groupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.groupPanel1.Style.BackColorGradientAngle = 90;
-            this.groupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.groupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderBottomWidth = 1;
-            this.groupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.groupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderLeftWidth = 1;
-            this.groupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderRightWidth = 1;
-            this.groupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
-            this.groupPanel1.Style.BorderTopWidth = 1;
-            this.groupPanel1.Style.CornerDiameter = 4;
-            this.groupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
-            this.groupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center;
-            this.groupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.groupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near;
-            // 
-            // 
-            // 
-            this.groupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            // 
-            // 
-            // 
-            this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.groupPanel1.TabIndex = 1;
-            this.groupPanel1.Text = "输入检索条件";
-            // 
-            // bt_jiansuo
-            // 
-            this.bt_jiansuo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.bt_jiansuo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.bt_jiansuo.Location = new System.Drawing.Point(260, 16);
-            this.bt_jiansuo.Name = "bt_jiansuo";
-            this.bt_jiansuo.Size = new System.Drawing.Size(87, 83);
-            this.bt_jiansuo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.bt_jiansuo.TabIndex = 4;
-            this.bt_jiansuo.Text = "检索";
-            this.bt_jiansuo.Click += new System.EventHandler(this.bt_jiansuo_Click);
-            // 
-            // tb_sfzh
-            // 
-            this.tb_sfzh.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_sfzh.Border.Class = "TextBoxBorder";
-            this.tb_sfzh.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_sfzh.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_sfzh.ForeColor = System.Drawing.Color.Black;
-            this.tb_sfzh.Location = new System.Drawing.Point(76, 79);
-            this.tb_sfzh.Name = "tb_sfzh";
-            this.tb_sfzh.PreventEnterBeep = true;
-            this.tb_sfzh.Size = new System.Drawing.Size(169, 20);
-            this.tb_sfzh.TabIndex = 3;
-            // 
-            // tb_gzzh
-            // 
-            this.tb_gzzh.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_gzzh.Border.Class = "TextBoxBorder";
-            this.tb_gzzh.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_gzzh.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_gzzh.ForeColor = System.Drawing.Color.Black;
-            this.tb_gzzh.Location = new System.Drawing.Point(76, 48);
-            this.tb_gzzh.Name = "tb_gzzh";
-            this.tb_gzzh.PreventEnterBeep = true;
-            this.tb_gzzh.Size = new System.Drawing.Size(169, 20);
-            this.tb_gzzh.TabIndex = 2;
-            // 
-            // tb_xm
-            // 
-            this.tb_xm.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_xm.Border.Class = "TextBoxBorder";
-            this.tb_xm.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_xm.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_xm.ForeColor = System.Drawing.Color.Black;
-            this.tb_xm.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.tb_xm.Location = new System.Drawing.Point(76, 17);
-            this.tb_xm.Name = "tb_xm";
-            this.tb_xm.PreventEnterBeep = true;
-            this.tb_xm.Size = new System.Drawing.Size(169, 20);
-            this.tb_xm.TabIndex = 1;
-            // 
-            // labelX3
-            // 
-            this.labelX3.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(11, 78);
-            this.labelX3.Name = "labelX3";
-            this.labelX3.Size = new System.Drawing.Size(75, 23);
-            this.labelX3.TabIndex = 0;
-            this.labelX3.Text = "身份证号：";
-            // 
-            // labelX2
-            // 
-            this.labelX2.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(11, 47);
-            this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(75, 23);
-            this.labelX2.TabIndex = 0;
-            this.labelX2.Text = "工作证号：";
-            // 
-            // labelX1
-            // 
-            this.labelX1.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Location = new System.Drawing.Point(11, 16);
-            this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(75, 23);
-            this.labelX1.TabIndex = 0;
-            this.labelX1.Text = "姓    名：";
-            // 
-            // dtp_t_initime
-            // 
-            this.dtp_t_initime.Location = new System.Drawing.Point(881, 355);
-            this.dtp_t_initime.Name = "dtp_t_initime";
-            this.dtp_t_initime.Size = new System.Drawing.Size(135, 20);
-            this.dtp_t_initime.TabIndex = 29;
-            // 
-            // dtp_t_schoolTime
-            // 
-            this.dtp_t_schoolTime.Location = new System.Drawing.Point(1147, 122);
-            this.dtp_t_schoolTime.Name = "dtp_t_schoolTime";
-            this.dtp_t_schoolTime.Size = new System.Drawing.Size(250, 20);
-            this.dtp_t_schoolTime.TabIndex = 16;
-            // 
-            // dtp_t_worktime
-            // 
-            this.dtp_t_worktime.Location = new System.Drawing.Point(1147, 93);
-            this.dtp_t_worktime.Name = "dtp_t_worktime";
-            this.dtp_t_worktime.Size = new System.Drawing.Size(250, 20);
-            this.dtp_t_worktime.TabIndex = 13;
-            // 
-            // dtp_t_birthday
-            // 
-            this.dtp_t_birthday.Location = new System.Drawing.Point(789, 93);
-            this.dtp_t_birthday.Name = "dtp_t_birthday";
-            this.dtp_t_birthday.Size = new System.Drawing.Size(250, 20);
-            this.dtp_t_birthday.TabIndex = 12;
-            // 
-            // tb_t_title
-            // 
-            this.tb_t_title.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_title.Border.Class = "TextBoxBorder";
-            this.tb_t_title.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_title.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_title.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_title.Location = new System.Drawing.Point(536, 151);
-            this.tb_t_title.Name = "tb_t_title";
-            this.tb_t_title.PreventEnterBeep = true;
-            this.tb_t_title.Size = new System.Drawing.Size(138, 20);
-            this.tb_t_title.TabIndex = 17;
-            // 
-            // tb_t_zhiwu
-            // 
-            this.tb_t_zhiwu.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_zhiwu.Border.Class = "TextBoxBorder";
-            this.tb_t_zhiwu.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_zhiwu.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_zhiwu.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_zhiwu.Location = new System.Drawing.Point(536, 122);
-            this.tb_t_zhiwu.Name = "tb_t_zhiwu";
-            this.tb_t_zhiwu.PreventEnterBeep = true;
-            this.tb_t_zhiwu.Size = new System.Drawing.Size(138, 20);
-            this.tb_t_zhiwu.TabIndex = 14;
-            // 
-            // tb_t_nation
-            // 
-            this.tb_t_nation.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_nation.Border.Class = "TextBoxBorder";
-            this.tb_t_nation.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_nation.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_nation.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_nation.Location = new System.Drawing.Point(536, 93);
-            this.tb_t_nation.Name = "tb_t_nation";
-            this.tb_t_nation.PreventEnterBeep = true;
-            this.tb_t_nation.Size = new System.Drawing.Size(138, 20);
-            this.tb_t_nation.TabIndex = 11;
-            // 
-            // tb_t_gender
-            // 
-            this.tb_t_gender.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_gender.Border.Class = "TextBoxBorder";
-            this.tb_t_gender.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_gender.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_gender.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_gender.Location = new System.Drawing.Point(536, 64);
-            this.tb_t_gender.Name = "tb_t_gender";
-            this.tb_t_gender.PreventEnterBeep = true;
-            this.tb_t_gender.Size = new System.Drawing.Size(138, 20);
-            this.tb_t_gender.TabIndex = 8;
-            // 
-            // tb_t_endSchool
-            // 
-            this.tb_t_endSchool.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_endSchool.Border.Class = "TextBoxBorder";
-            this.tb_t_endSchool.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_endSchool.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_endSchool.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_endSchool.Location = new System.Drawing.Point(1103, 383);
-            this.tb_t_endSchool.Name = "tb_t_endSchool";
-            this.tb_t_endSchool.PreventEnterBeep = true;
-            this.tb_t_endSchool.Size = new System.Drawing.Size(294, 20);
-            this.tb_t_endSchool.TabIndex = 34;
-            // 
-            // tb_t_hunyin
-            // 
-            this.tb_t_hunyin.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_hunyin.Border.Class = "TextBoxBorder";
-            this.tb_t_hunyin.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_hunyin.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_hunyin.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_hunyin.Location = new System.Drawing.Point(1147, 151);
-            this.tb_t_hunyin.Name = "tb_t_hunyin";
-            this.tb_t_hunyin.PreventEnterBeep = true;
-            this.tb_t_hunyin.Size = new System.Drawing.Size(250, 20);
-            this.tb_t_hunyin.TabIndex = 19;
-            // 
-            // tb_t_endDegree
-            // 
-            this.tb_t_endDegree.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_endDegree.Border.Class = "TextBoxBorder";
-            this.tb_t_endDegree.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_endDegree.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_endDegree.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_endDegree.Location = new System.Drawing.Point(708, 383);
-            this.tb_t_endDegree.Name = "tb_t_endDegree";
-            this.tb_t_endDegree.PreventEnterBeep = true;
-            this.tb_t_endDegree.Size = new System.Drawing.Size(93, 20);
-            this.tb_t_endDegree.TabIndex = 32;
-            // 
-            // tb_t_inischool
-            // 
-            this.tb_t_inischool.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_inischool.Border.Class = "TextBoxBorder";
-            this.tb_t_inischool.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_inischool.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_inischool.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_inischool.Location = new System.Drawing.Point(1103, 355);
-            this.tb_t_inischool.Name = "tb_t_inischool";
-            this.tb_t_inischool.PreventEnterBeep = true;
-            this.tb_t_inischool.Size = new System.Drawing.Size(294, 20);
-            this.tb_t_inischool.TabIndex = 30;
-            // 
-            // tb_t_endxueli
-            // 
-            this.tb_t_endxueli.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_endxueli.Border.Class = "TextBoxBorder";
-            this.tb_t_endxueli.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_endxueli.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_endxueli.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_endxueli.Location = new System.Drawing.Point(536, 383);
-            this.tb_t_endxueli.Name = "tb_t_endxueli";
-            this.tb_t_endxueli.PreventEnterBeep = true;
-            this.tb_t_endxueli.Size = new System.Drawing.Size(93, 20);
-            this.tb_t_endxueli.TabIndex = 31;
-            // 
-            // tb_t_workLength
-            // 
-            this.tb_t_workLength.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_workLength.Border.Class = "TextBoxBorder";
-            this.tb_t_workLength.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_workLength.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_workLength.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_workLength.Location = new System.Drawing.Point(769, 323);
-            this.tb_t_workLength.Name = "tb_t_workLength";
-            this.tb_t_workLength.PreventEnterBeep = true;
-            this.tb_t_workLength.Size = new System.Drawing.Size(93, 20);
-            this.tb_t_workLength.TabIndex = 26;
-            // 
-            // tb_t_iniDegree
-            // 
-            this.tb_t_iniDegree.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_iniDegree.Border.Class = "TextBoxBorder";
-            this.tb_t_iniDegree.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_iniDegree.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_iniDegree.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_iniDegree.Location = new System.Drawing.Point(708, 355);
-            this.tb_t_iniDegree.Name = "tb_t_iniDegree";
-            this.tb_t_iniDegree.PreventEnterBeep = true;
-            this.tb_t_iniDegree.Size = new System.Drawing.Size(93, 20);
-            this.tb_t_iniDegree.TabIndex = 28;
-            // 
-            // tb_t_inixueli
-            // 
-            this.tb_t_inixueli.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_inixueli.Border.Class = "TextBoxBorder";
-            this.tb_t_inixueli.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_inixueli.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_inixueli.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_inixueli.Location = new System.Drawing.Point(536, 355);
-            this.tb_t_inixueli.Name = "tb_t_inixueli";
-            this.tb_t_inixueli.PreventEnterBeep = true;
-            this.tb_t_inixueli.Size = new System.Drawing.Size(93, 20);
-            this.tb_t_inixueli.TabIndex = 27;
-            // 
-            // tb_t_email
-            // 
-            this.tb_t_email.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_email.Border.Class = "TextBoxBorder";
-            this.tb_t_email.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_email.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_email.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_email.Location = new System.Drawing.Point(789, 151);
-            this.tb_t_email.Name = "tb_t_email";
-            this.tb_t_email.PreventEnterBeep = true;
-            this.tb_t_email.Size = new System.Drawing.Size(250, 20);
-            this.tb_t_email.TabIndex = 18;
-            // 
-            // tb_t_zzmm
-            // 
-            this.tb_t_zzmm.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_zzmm.Border.Class = "TextBoxBorder";
-            this.tb_t_zzmm.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_zzmm.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_zzmm.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_zzmm.Location = new System.Drawing.Point(789, 122);
-            this.tb_t_zzmm.Name = "tb_t_zzmm";
-            this.tb_t_zzmm.PreventEnterBeep = true;
-            this.tb_t_zzmm.Size = new System.Drawing.Size(250, 20);
-            this.tb_t_zzmm.TabIndex = 15;
-            // 
-            // tb_t_familyMember
-            // 
-            this.tb_t_familyMember.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_familyMember.Border.Class = "TextBoxBorder";
-            this.tb_t_familyMember.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_familyMember.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_familyMember.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_familyMember.Location = new System.Drawing.Point(536, 291);
-            this.tb_t_familyMember.Name = "tb_t_familyMember";
-            this.tb_t_familyMember.PreventEnterBeep = true;
-            this.tb_t_familyMember.Size = new System.Drawing.Size(861, 20);
-            this.tb_t_familyMember.TabIndex = 24;
-            // 
-            // labelX33
-            // 
-            // 
-            // 
-            // 
-            this.labelX33.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX33.Location = new System.Drawing.Point(708, 322);
-            this.labelX33.Name = "labelX33";
-            this.labelX33.Size = new System.Drawing.Size(75, 23);
-            this.labelX33.TabIndex = 3;
-            this.labelX33.Text = "工作年限：";
-            // 
-            // tb_t_researchArea
-            // 
-            this.tb_t_researchArea.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_researchArea.Border.Class = "TextBoxBorder";
-            this.tb_t_researchArea.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_researchArea.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_researchArea.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_researchArea.Location = new System.Drawing.Point(536, 264);
-            this.tb_t_researchArea.Name = "tb_t_researchArea";
-            this.tb_t_researchArea.PreventEnterBeep = true;
-            this.tb_t_researchArea.Size = new System.Drawing.Size(861, 20);
-            this.tb_t_researchArea.TabIndex = 23;
-            // 
-            // tb_t_subject
-            // 
-            this.tb_t_subject.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_subject.Border.Class = "TextBoxBorder";
-            this.tb_t_subject.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_subject.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_subject.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_subject.Location = new System.Drawing.Point(536, 236);
-            this.tb_t_subject.Name = "tb_t_subject";
-            this.tb_t_subject.PreventEnterBeep = true;
-            this.tb_t_subject.Size = new System.Drawing.Size(861, 20);
-            this.tb_t_subject.TabIndex = 22;
-            // 
-            // tb_t_hukouaddress
-            // 
-            this.tb_t_hukouaddress.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_hukouaddress.Border.Class = "TextBoxBorder";
-            this.tb_t_hukouaddress.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_hukouaddress.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_hukouaddress.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_hukouaddress.Location = new System.Drawing.Point(536, 208);
-            this.tb_t_hukouaddress.Name = "tb_t_hukouaddress";
-            this.tb_t_hukouaddress.PreventEnterBeep = true;
-            this.tb_t_hukouaddress.Size = new System.Drawing.Size(861, 20);
-            this.tb_t_hukouaddress.TabIndex = 21;
-            // 
-            // tb_t_homeAddress
-            // 
-            this.tb_t_homeAddress.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_homeAddress.Border.Class = "TextBoxBorder";
-            this.tb_t_homeAddress.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_homeAddress.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_homeAddress.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_homeAddress.Location = new System.Drawing.Point(536, 180);
-            this.tb_t_homeAddress.Name = "tb_t_homeAddress";
-            this.tb_t_homeAddress.PreventEnterBeep = true;
-            this.tb_t_homeAddress.Size = new System.Drawing.Size(861, 20);
-            this.tb_t_homeAddress.TabIndex = 20;
-            // 
-            // tb_t_jiaoyanshi
-            // 
-            this.tb_t_jiaoyanshi.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_jiaoyanshi.Border.Class = "TextBoxBorder";
-            this.tb_t_jiaoyanshi.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_jiaoyanshi.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_jiaoyanshi.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_jiaoyanshi.Location = new System.Drawing.Point(1147, 64);
-            this.tb_t_jiaoyanshi.Name = "tb_t_jiaoyanshi";
-            this.tb_t_jiaoyanshi.PreventEnterBeep = true;
-            this.tb_t_jiaoyanshi.Size = new System.Drawing.Size(250, 20);
-            this.tb_t_jiaoyanshi.TabIndex = 10;
-            // 
-            // tb_t_idcard
-            // 
-            this.tb_t_idcard.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_idcard.Border.Class = "TextBoxBorder";
-            this.tb_t_idcard.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_idcard.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_idcard.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_idcard.Location = new System.Drawing.Point(789, 64);
-            this.tb_t_idcard.Name = "tb_t_idcard";
-            this.tb_t_idcard.PreventEnterBeep = true;
-            this.tb_t_idcard.Size = new System.Drawing.Size(250, 20);
-            this.tb_t_idcard.TabIndex = 9;
-            // 
-            // tb_t_phone
-            // 
-            this.tb_t_phone.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_phone.Border.Class = "TextBoxBorder";
-            this.tb_t_phone.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_phone.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_phone.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_phone.Location = new System.Drawing.Point(1147, 35);
-            this.tb_t_phone.Name = "tb_t_phone";
-            this.tb_t_phone.PreventEnterBeep = true;
-            this.tb_t_phone.Size = new System.Drawing.Size(250, 20);
-            this.tb_t_phone.TabIndex = 7;
-            // 
-            // tb_t_xm
-            // 
-            this.tb_t_xm.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_xm.Border.Class = "TextBoxBorder";
-            this.tb_t_xm.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_xm.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_xm.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_xm.Location = new System.Drawing.Point(536, 35);
-            this.tb_t_xm.Name = "tb_t_xm";
-            this.tb_t_xm.PreventEnterBeep = true;
-            this.tb_t_xm.Size = new System.Drawing.Size(138, 20);
-            this.tb_t_xm.TabIndex = 5;
-            // 
-            // tb_t_gzz
-            // 
-            this.tb_t_gzz.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.tb_t_gzz.Border.Class = "TextBoxBorder";
-            this.tb_t_gzz.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_t_gzz.DisabledBackColor = System.Drawing.Color.White;
-            this.tb_t_gzz.ForeColor = System.Drawing.Color.Black;
-            this.tb_t_gzz.Location = new System.Drawing.Point(789, 35);
-            this.tb_t_gzz.Name = "tb_t_gzz";
-            this.tb_t_gzz.PreventEnterBeep = true;
-            this.tb_t_gzz.Size = new System.Drawing.Size(250, 20);
-            this.tb_t_gzz.TabIndex = 6;
-            // 
-            // labelX4
-            // 
-            this.labelX4.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Location = new System.Drawing.Point(495, 34);
-            this.labelX4.Name = "labelX4";
-            this.labelX4.Size = new System.Drawing.Size(75, 23);
-            this.labelX4.TabIndex = 0;
-            this.labelX4.Text = "姓名：";
-            // 
-            // labelX5
-            // 
-            this.labelX5.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX5.Location = new System.Drawing.Point(495, 63);
-            this.labelX5.Name = "labelX5";
-            this.labelX5.Size = new System.Drawing.Size(75, 23);
-            this.labelX5.TabIndex = 1;
-            this.labelX5.Text = "性别：";
-            // 
-            // labelX6
-            // 
-            this.labelX6.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX6.Location = new System.Drawing.Point(495, 92);
-            this.labelX6.Name = "labelX6";
-            this.labelX6.Size = new System.Drawing.Size(75, 23);
-            this.labelX6.TabIndex = 2;
-            this.labelX6.Text = "民族：";
-            // 
-            // labelX10
-            // 
-            this.labelX10.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX10.Location = new System.Drawing.Point(495, 121);
-            this.labelX10.Name = "labelX10";
-            this.labelX10.Size = new System.Drawing.Size(75, 23);
-            this.labelX10.TabIndex = 2;
-            this.labelX10.Text = "职务：";
-            // 
-            // labelX11
-            // 
-            this.labelX11.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX11.Location = new System.Drawing.Point(495, 150);
-            this.labelX11.Name = "labelX11";
-            this.labelX11.Size = new System.Drawing.Size(75, 23);
-            this.labelX11.TabIndex = 2;
-            this.labelX11.Text = "职称：";
-            // 
-            // labelX7
-            // 
-            this.labelX7.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX7.Location = new System.Drawing.Point(726, 34);
-            this.labelX7.Name = "labelX7";
-            this.labelX7.Size = new System.Drawing.Size(75, 23);
-            this.labelX7.TabIndex = 3;
-            this.labelX7.Text = "工作证号：";
-            // 
-            // labelX8
-            // 
-            this.labelX8.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX8.Location = new System.Drawing.Point(726, 63);
-            this.labelX8.Name = "labelX8";
-            this.labelX8.Size = new System.Drawing.Size(75, 23);
-            this.labelX8.TabIndex = 3;
-            this.labelX8.Text = "身份证号：";
-            // 
-            // labelX14
-            // 
-            this.labelX14.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX14.Location = new System.Drawing.Point(1084, 34);
-            this.labelX14.Name = "labelX14";
-            this.labelX14.Size = new System.Drawing.Size(75, 23);
-            this.labelX14.TabIndex = 3;
-            this.labelX14.Text = "联系电话：";
-            // 
-            // labelX9
-            // 
-            this.labelX9.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX9.Location = new System.Drawing.Point(726, 92);
-            this.labelX9.Name = "labelX9";
-            this.labelX9.Size = new System.Drawing.Size(75, 23);
-            this.labelX9.TabIndex = 3;
-            this.labelX9.Text = "出生时间：";
-            // 
-            // labelX15
-            // 
-            this.labelX15.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX15.Location = new System.Drawing.Point(1084, 63);
-            this.labelX15.Name = "labelX15";
-            this.labelX15.Size = new System.Drawing.Size(75, 23);
-            this.labelX15.TabIndex = 3;
-            this.labelX15.Text = "教 研 室：";
-            // 
-            // labelX12
-            // 
-            this.labelX12.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX12.Location = new System.Drawing.Point(726, 121);
-            this.labelX12.Name = "labelX12";
-            this.labelX12.Size = new System.Drawing.Size(75, 23);
-            this.labelX12.TabIndex = 3;
-            this.labelX12.Text = "政治面貌：";
-            // 
-            // labelX16
-            // 
-            this.labelX16.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX16.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX16.Location = new System.Drawing.Point(1084, 92);
-            this.labelX16.Name = "labelX16";
-            this.labelX16.Size = new System.Drawing.Size(75, 23);
-            this.labelX16.TabIndex = 3;
-            this.labelX16.Text = "工作时间：";
-            // 
-            // labelX13
-            // 
-            this.labelX13.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX13.Location = new System.Drawing.Point(726, 150);
-            this.labelX13.Name = "labelX13";
-            this.labelX13.Size = new System.Drawing.Size(75, 23);
-            this.labelX13.TabIndex = 3;
-            this.labelX13.Text = "电子信箱：";
-            // 
-            // labelX25
-            // 
-            this.labelX25.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX25.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX25.Location = new System.Drawing.Point(469, 354);
-            this.labelX25.Name = "labelX25";
-            this.labelX25.Size = new System.Drawing.Size(75, 23);
-            this.labelX25.TabIndex = 3;
-            this.labelX25.Text = "初始学历：";
-            // 
-            // labelX19
-            // 
-            this.labelX19.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX19.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX19.Location = new System.Drawing.Point(473, 179);
-            this.labelX19.Name = "labelX19";
-            this.labelX19.Size = new System.Drawing.Size(75, 23);
-            this.labelX19.TabIndex = 3;
-            this.labelX19.Text = "家庭住址：";
-            // 
-            // labelX29
-            // 
-            this.labelX29.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX29.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX29.Location = new System.Drawing.Point(469, 382);
-            this.labelX29.Name = "labelX29";
-            this.labelX29.Size = new System.Drawing.Size(75, 23);
-            this.labelX29.TabIndex = 3;
-            this.labelX29.Text = "最后学历：";
-            // 
-            // labelX41
-            // 
-            this.labelX41.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX41.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX41.Location = new System.Drawing.Point(455, 484);
-            this.labelX41.Name = "labelX41";
-            this.labelX41.Size = new System.Drawing.Size(75, 23);
-            this.labelX41.TabIndex = 3;
-            this.labelX41.Text = "个人照片：";
-            // 
-            // labelX26
-            // 
-            this.labelX26.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX26.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX26.Location = new System.Drawing.Point(647, 354);
-            this.labelX26.Name = "labelX26";
-            this.labelX26.Size = new System.Drawing.Size(75, 23);
-            this.labelX26.TabIndex = 3;
-            this.labelX26.Text = "初始学位：";
-            // 
-            // labelX17
-            // 
-            this.labelX17.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX17.Location = new System.Drawing.Point(1084, 121);
-            this.labelX17.Name = "labelX17";
-            this.labelX17.Size = new System.Drawing.Size(75, 23);
-            this.labelX17.TabIndex = 3;
-            this.labelX17.Text = "来校时间：";
-            // 
-            // labelX30
-            // 
-            this.labelX30.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX30.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX30.Location = new System.Drawing.Point(647, 382);
-            this.labelX30.Name = "labelX30";
-            this.labelX30.Size = new System.Drawing.Size(75, 23);
-            this.labelX30.TabIndex = 3;
-            this.labelX30.Text = "最后学位：";
-            // 
-            // labelX27
-            // 
-            this.labelX27.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX27.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX27.Location = new System.Drawing.Point(817, 354);
-            this.labelX27.Name = "labelX27";
-            this.labelX27.Size = new System.Drawing.Size(75, 23);
-            this.labelX27.TabIndex = 3;
-            this.labelX27.Text = "毕业时间：";
-            // 
-            // labelX28
-            // 
-            this.labelX28.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX28.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX28.Location = new System.Drawing.Point(1036, 354);
-            this.labelX28.Name = "labelX28";
-            this.labelX28.Size = new System.Drawing.Size(75, 23);
-            this.labelX28.TabIndex = 3;
-            this.labelX28.Text = "毕业学校：";
-            // 
-            // labelX31
-            // 
-            this.labelX31.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX31.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX31.Location = new System.Drawing.Point(817, 382);
-            this.labelX31.Name = "labelX31";
-            this.labelX31.Size = new System.Drawing.Size(75, 23);
-            this.labelX31.TabIndex = 3;
-            this.labelX31.Text = "毕业时间：";
-            // 
-            // labelX20
-            // 
-            this.labelX20.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX20.Location = new System.Drawing.Point(473, 207);
-            this.labelX20.Name = "labelX20";
-            this.labelX20.Size = new System.Drawing.Size(75, 23);
-            this.labelX20.TabIndex = 3;
-            this.labelX20.Text = "户口地址：";
-            // 
-            // labelX32
-            // 
-            this.labelX32.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX32.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX32.Location = new System.Drawing.Point(1036, 382);
-            this.labelX32.Name = "labelX32";
-            this.labelX32.Size = new System.Drawing.Size(75, 23);
-            this.labelX32.TabIndex = 3;
-            this.labelX32.Text = "毕业学校：";
-            // 
-            // labelX24
-            // 
-            this.labelX24.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX24.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX24.Location = new System.Drawing.Point(457, 322);
-            this.labelX24.Name = "labelX24";
-            this.labelX24.Size = new System.Drawing.Size(88, 23);
-            this.labelX24.TabIndex = 3;
-            this.labelX24.Text = "是否为博导：";
-            // 
-            // labelX23
-            // 
-            this.labelX23.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX23.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX23.Location = new System.Drawing.Point(446, 290);
-            this.labelX23.Name = "labelX23";
-            this.labelX23.Size = new System.Drawing.Size(95, 23);
-            this.labelX23.TabIndex = 3;
-            this.labelX23.Text = "家庭主要成员：";
-            // 
-            // labelX21
-            // 
-            this.labelX21.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX21.Location = new System.Drawing.Point(412, 235);
-            this.labelX21.Name = "labelX21";
-            this.labelX21.Size = new System.Drawing.Size(136, 23);
-            this.labelX21.TabIndex = 3;
-            this.labelX21.Text = "现主要从事学科门类：";
-            // 
-            // labelX18
-            // 
-            this.labelX18.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX18.Location = new System.Drawing.Point(1084, 150);
-            this.labelX18.Name = "labelX18";
-            this.labelX18.Size = new System.Drawing.Size(75, 23);
-            this.labelX18.TabIndex = 3;
-            this.labelX18.Text = "婚姻状况：";
-            // 
-            // labelX22
-            // 
-            this.labelX22.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX22.Location = new System.Drawing.Point(434, 263);
-            this.labelX22.Name = "labelX22";
-            this.labelX22.Size = new System.Drawing.Size(136, 23);
-            this.labelX22.TabIndex = 3;
-            this.labelX22.Text = "教学和研究方向：";
-            // 
-            // superTabItem1
-            // 
-            this.superTabItem1.AttachedControl = this.superTabControlPanel1;
-            this.superTabItem1.GlobalItem = false;
-            this.superTabItem1.Name = "superTabItem1";
-            this.superTabItem1.Text = "信息检索";
-            // 
             // styleManager1
             // 
             this.styleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Office2016;
@@ -3454,6 +3510,18 @@ namespace Marx
             // 
             this.opf_picture.Filter = "图片|*.bmp;*.jpg;*.png;*.jpeg;*.JPG;*.PNG;*.BMP;*.JPEG|所有文件|*.*\"";
             // 
+            // axdoc_main
+            // 
+            this.axdoc_main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.axdoc_main.Enabled = true;
+            this.axdoc_main.Location = new System.Drawing.Point(422, 0);
+            this.axdoc_main.Name = "axdoc_main";
+            this.axdoc_main.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axdoc_main.OcxState")));
+            this.axdoc_main.Size = new System.Drawing.Size(1000, 712);
+            this.axdoc_main.TabIndex = 37;
+            // 
             // F_main
             // 
             this.AcceptButton = this.bt_jiansuo;
@@ -3468,6 +3536,13 @@ namespace Marx
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).EndInit();
             this.superTabControl1.ResumeLayout(false);
+            this.superTabControlPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pb_person)).EndInit();
+            this.groupPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_qresult)).EndInit();
+            this.cms_dgvAction.ResumeLayout(false);
+            this.groupPanel1.ResumeLayout(false);
+            this.superTabControlPanel4.ResumeLayout(false);
             this.superTabControlPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pb_luru)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_initime)).EndInit();
@@ -3478,17 +3553,21 @@ namespace Marx
             this.superTabControlPanel3.ResumeLayout(false);
             this.groupPanel4.ResumeLayout(false);
             this.groupPanel3.ResumeLayout(false);
-            this.superTabControlPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pb_person)).EndInit();
-            this.groupPanel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_qresult)).EndInit();
-            this.cms_dgvAction.ResumeLayout(false);
-            this.groupPanel1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axdoc_main)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+
+            //this.axFramerControl1
+            this.axdoc_main.Open(Application.StartupPath + @"\dll\jianli.docx");
+            //this.axFramerControl1.Open(oDoc);
         }
     }
 }

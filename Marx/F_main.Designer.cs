@@ -21,6 +21,10 @@
         }
 
         private System.Windows.Forms.PictureBox pb_luru;
+        private DevComponents.DotNetBar.SuperTabControlPanel superTabControlPanel4;
+        private DevComponents.DotNetBar.SuperTabItem superTabItem4;
+        private System.Windows.Forms.Button button1;
+        private AxDSOFramer.AxFramerControl axdoc_main;
 
         #region Windows Form Designer generated code
 
