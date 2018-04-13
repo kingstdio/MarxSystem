@@ -25,6 +25,8 @@
         private DevComponents.DotNetBar.SuperTabItem superTabItem4;
         private System.Windows.Forms.Button button1;
         private AxDSOFramer.AxFramerControl axdoc_main;
+        private DevComponents.DotNetBar.ButtonX btx_export;
+        private System.Windows.Forms.SaveFileDialog sfd_main;
 
         #region Windows Form Designer generated code
 

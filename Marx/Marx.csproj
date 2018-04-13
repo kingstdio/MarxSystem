@@ -121,9 +121,6 @@
     <EmbeddedResource Include="UC_basicInfo.resx">
       <DependentUpon>UC_basicInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="template\jianli.docx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="template\resume.dotx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

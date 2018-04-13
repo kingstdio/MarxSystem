@@ -52,9 +52,9 @@ namespace Marx
         private string pathDocCache = Application.StartupPath + @"\cache\";
         private string pathDocTemplate = Application.StartupPath + @"\template\resume.dotx";
 
+        private Uri personuri = new Uri(Application.StartupPath + @"/template/personDetail.html");
 
-
-
+        #region ui define
         private DevComponents.DotNetBar.SuperTabControl superTabControl1;
         private DevComponents.DotNetBar.SuperTabControlPanel superTabControlPanel1;
         private DevComponents.DotNetBar.Controls.SwitchButton sw_t_phdTutor;
@@ -218,7 +218,8 @@ namespace Marx
         private DevComponents.DotNetBar.SuperTabItem superTabItem3;
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel4;
         private DevComponents.DotNetBar.LabelX lb_dangyuan;
-        private Uri personuri = new Uri(Application.StartupPath + @"/template/personDetail.html");
+
+        #endregion
 
         public F_main()
         {
@@ -293,65 +294,59 @@ namespace Marx
 
 
 
-            //tb_t_xm.Text = dr["name"].ToString();
-            //tb_t_gzz.Text = dr["tid"].ToString();
-            //tb_t_phone.Text = dr["phone"].ToString();
-            //tb_t_gender.Text = dr["gender"].ToString();
-            //tb_t_idcard.Text = dr["idcard"].ToString();
-            //tb_t_jiaoyanshi.Text = dr["researchSection"].ToString();
-            //tb_t_nation.Text = dr["nation"].ToString();
-            //dtp_t_birthday.Text = dr["birthday"].ToString();
-            //dtp_t_worktime.Text = dr["workStrartDate"].ToString();
-            //tb_t_zhiwu.Text = dr["duty"].ToString();
-            //tb_t_title.Text = dr["title"].ToString();
-            //tb_t_zzmm.Text = dr["politicalStatus"].ToString();
-            //dtp_t_schoolTime.Text = dr["schoolStartDate"].ToString();
-            //tb_t_email.Text = dr["email"].ToString();
-            //tb_t_hunyin.Text = dr["civilState"].ToString();
-            //tb_t_homeAddress.Text = dr["homeAddress"].ToString();
-            //tb_t_hukouaddress.Text = dr["residenceAddress"].ToString();
-            //tb_t_subject.Text = dr["subject"].ToString();
-            //tb_t_researchArea.Text = dr["rearchArea"].ToString();
-            //tb_t_familyMember.Text = dr["familyMembers"].ToString();
-            //if (dr["tutorOfPhD"].ToString().Trim() != string.Empty)
-            //{
-            //    sw_t_phdTutor.Value = (bool)dr["tutorOfPhD"] ? true : false;
-            //}
-            //else
-            //{
-            //    sw_t_phdTutor.Value = false;
-            //}
-            //tb_t_workLength.Text = ((float)(DateTime.Now.Subtract(dtp_t_worktime.Value)).Days / 365).ToString("##.#");
-            //tb_t_inixueli.Text = dr["initEducation"].ToString();
-            //tb_t_iniDegree.Text = dr["initDegree"].ToString();
-            //tb_t_inischool.Text = dr["initSchool"].ToString();
-            //dtp_t_initime.Text = dr["intiDate"].ToString();
-            //tb_t_endxueli.Text = dr["lastEducation"].ToString();
-            //tb_t_endDegree.Text = dr["lastDegree"].ToString();
-            //tb_t_endSchool.Text = dr["lastSchool"].ToString();
-            //dtp_t_endTime.Text = dr["lastDate"].ToString();
-            //string ppath = dr["photo"].ToString().Trim();
-            //if (ppath != string.Empty)
-            //{
-            //    pb_person.Image = Image.FromFile((Application.StartupPath + @"\" + ppath));
-            //}
-            //else
-            //{
-            //    pb_person.Image = null;
-            //}
-            string cacc = DateTime.Now.ToBinary().ToString(); 
-            Utils.WordTools.Create(pathDocTemplate, pathDocCache, dr);
-            
+            tb_t_xm.Text = dr["name"].ToString();
+            tb_t_gzz.Text = dr["tid"].ToString();
+            tb_t_phone.Text = dr["phone"].ToString();
+            tb_t_gender.Text = dr["gender"].ToString();
+            tb_t_idcard.Text = dr["idcard"].ToString();
+            tb_t_jiaoyanshi.Text = dr["researchSection"].ToString();
+            tb_t_nation.Text = dr["nation"].ToString();
+            dtp_t_birthday.Text = dr["birthday"].ToString();
+            dtp_t_worktime.Text = dr["workStrartDate"].ToString();
+            tb_t_zhiwu.Text = dr["duty"].ToString();
+            tb_t_title.Text = dr["title"].ToString();
+            tb_t_zzmm.Text = dr["politicalStatus"].ToString();
+            dtp_t_schoolTime.Text = dr["schoolStartDate"].ToString();
+            tb_t_email.Text = dr["email"].ToString();
+            tb_t_hunyin.Text = dr["civilState"].ToString();
+            tb_t_homeAddress.Text = dr["homeAddress"].ToString();
+            tb_t_hukouaddress.Text = dr["residenceAddress"].ToString();
+            tb_t_subject.Text = dr["subject"].ToString();
+            tb_t_researchArea.Text = dr["rearchArea"].ToString();
+            tb_t_familyMember.Text = dr["familyMembers"].ToString();
+            if (dr["tutorOfPhD"].ToString().Trim() != string.Empty)
+            {
+                sw_t_phdTutor.Value = (bool)dr["tutorOfPhD"] ? true : false;
+            }
+            else
+            {
+                sw_t_phdTutor.Value = false;
+            }
+            tb_t_workLength.Text = ((float)(DateTime.Now.Subtract(dtp_t_worktime.Value)).Days / 365).ToString("##.#");
+            tb_t_inixueli.Text = dr["initEducation"].ToString();
+            tb_t_iniDegree.Text = dr["initDegree"].ToString();
+            tb_t_inischool.Text = dr["initSchool"].ToString();
+            dtp_t_initime.Text = dr["intiDate"].ToString();
+            tb_t_endxueli.Text = dr["lastEducation"].ToString();
+            tb_t_endDegree.Text = dr["lastDegree"].ToString();
+            tb_t_endSchool.Text = dr["lastSchool"].ToString();
+            dtp_t_endTime.Text = dr["lastDate"].ToString();
+            string ppath = dr["photo"].ToString().Trim();
+            if (ppath != string.Empty)
+            {
+                pb_person.Image = Image.FromFile((Application.StartupPath + @"\" + ppath));
+            }
+            else
+            {
+                pb_person.Image = null;
+            }
+            //string cacc = DateTime.Now.ToBinary().ToString(); 
+            //Utils.WordTools.Create(pathDocTemplate, pathDocCache, dr);
+
             //this.axdoc_main.Open(pathDocCache + @"cache"+ cacc + ".docx",true,null,null,null);
         }
         #endregion
 
-        #region 填充行号
-        private void dgv_qresult_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
-        {
-
-        }
-        #endregion
 
         #region 单元格点击事件
         private void dgv_qresult_Click(object sender, EventArgs e)
@@ -385,7 +380,7 @@ namespace Marx
                       ,email,phone,researchSection,duty,title,homeAddress,residenceAddress
                       ,workStrartDate,schoolStartDate,subject,rearchArea,civilState
                       ,familyMembers,tutorOfPhD,initDegree,initEducation,intiDate
-                      ,initSchool,lastDegree,lastEducation,lastDate,lastSchool
+                      ,initSchool,lastDegree,lastEducation,lastDate,lastSchool, photo 
                   FROM tb_basicInfo where idcard='" + idcard + "'";
                     DataRow dr = SQLHELPER.ExecuteDataRow(sql);
                     if (dr != null)
@@ -447,6 +442,9 @@ namespace Marx
             tb_i_enddegree.Text = dr["lastDegree"].ToString();
             tb_i_endschool.Text = dr["lastSchool"].ToString();
             dtp_i_endtime.Text = dr["lastDate"].ToString();
+            string ppath = dr["photo"].ToString().Trim();
+            pb_luru.Image = Image.FromFile((Application.StartupPath + @"\" + ppath));
+
         }
         #endregion
 
@@ -654,7 +652,7 @@ namespace Marx
 
         #endregion
 
-
+        #region initial cpmponent
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -736,9 +734,6 @@ namespace Marx
             this.labelX18 = new DevComponents.DotNetBar.LabelX();
             this.labelX22 = new DevComponents.DotNetBar.LabelX();
             this.superTabItem1 = new DevComponents.DotNetBar.SuperTabItem();
-            this.superTabControlPanel4 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.superTabItem4 = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.pb_luru = new System.Windows.Forms.PictureBox();
             this.dtp_i_initime = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
@@ -815,6 +810,10 @@ namespace Marx
             this.labelX35 = new DevComponents.DotNetBar.LabelX();
             this.labelX36 = new DevComponents.DotNetBar.LabelX();
             this.superTabItem2 = new DevComponents.DotNetBar.SuperTabItem();
+            this.superTabControlPanel4 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.axdoc_main = new AxDSOFramer.AxFramerControl();
+            this.button1 = new System.Windows.Forms.Button();
+            this.superTabItem4 = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel3 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.groupPanel4 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.lb_dangyuan = new DevComponents.DotNetBar.LabelX();
@@ -825,7 +824,8 @@ namespace Marx
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lb_totalNum = new System.Windows.Forms.ToolStripStatusLabel();
             this.opf_picture = new System.Windows.Forms.OpenFileDialog();
-            this.axdoc_main = new AxDSOFramer.AxFramerControl();
+            this.btx_export = new DevComponents.DotNetBar.ButtonX();
+            this.sfd_main = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
@@ -834,7 +834,6 @@ namespace Marx
             ((System.ComponentModel.ISupportInitialize)(this.dgv_qresult)).BeginInit();
             this.cms_dgvAction.SuspendLayout();
             this.groupPanel1.SuspendLayout();
-            this.superTabControlPanel4.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_luru)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_initime)).BeginInit();
@@ -842,11 +841,12 @@ namespace Marx
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_schooltime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_worktime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_birthday)).BeginInit();
+            this.superTabControlPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axdoc_main)).BeginInit();
             this.superTabControlPanel3.SuspendLayout();
             this.groupPanel4.SuspendLayout();
             this.groupPanel3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axdoc_main)).BeginInit();
             this.SuspendLayout();
             // 
             // superTabControl1
@@ -892,6 +892,7 @@ namespace Marx
             // 
             // superTabControlPanel1
             // 
+            this.superTabControlPanel1.Controls.Add(this.btx_export);
             this.superTabControlPanel1.Controls.Add(this.pb_person);
             this.superTabControlPanel1.Controls.Add(this.sw_t_phdTutor);
             this.superTabControlPanel1.Controls.Add(this.groupPanel2);
@@ -1063,6 +1064,8 @@ namespace Marx
             // 
             // dtp_t_endTime
             // 
+            this.dtp_t_endTime.Enabled = false;
+            this.dtp_t_endTime.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_t_endTime.Location = new System.Drawing.Point(881, 383);
             this.dtp_t_endTime.Name = "dtp_t_endTime";
             this.dtp_t_endTime.Size = new System.Drawing.Size(135, 20);
@@ -1217,6 +1220,8 @@ namespace Marx
             // 
             // dtp_t_initime
             // 
+            this.dtp_t_initime.Enabled = false;
+            this.dtp_t_initime.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_t_initime.Location = new System.Drawing.Point(881, 355);
             this.dtp_t_initime.Name = "dtp_t_initime";
             this.dtp_t_initime.Size = new System.Drawing.Size(135, 20);
@@ -1224,6 +1229,8 @@ namespace Marx
             // 
             // dtp_t_schoolTime
             // 
+            this.dtp_t_schoolTime.Enabled = false;
+            this.dtp_t_schoolTime.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_t_schoolTime.Location = new System.Drawing.Point(1147, 122);
             this.dtp_t_schoolTime.Name = "dtp_t_schoolTime";
             this.dtp_t_schoolTime.Size = new System.Drawing.Size(250, 20);
@@ -1231,6 +1238,8 @@ namespace Marx
             // 
             // dtp_t_worktime
             // 
+            this.dtp_t_worktime.Enabled = false;
+            this.dtp_t_worktime.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_t_worktime.Location = new System.Drawing.Point(1147, 93);
             this.dtp_t_worktime.Name = "dtp_t_worktime";
             this.dtp_t_worktime.Size = new System.Drawing.Size(250, 20);
@@ -1238,6 +1247,8 @@ namespace Marx
             // 
             // dtp_t_birthday
             // 
+            this.dtp_t_birthday.Enabled = false;
+            this.dtp_t_birthday.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp_t_birthday.Location = new System.Drawing.Point(789, 93);
             this.dtp_t_birthday.Name = "dtp_t_birthday";
             this.dtp_t_birthday.Size = new System.Drawing.Size(250, 20);
@@ -1256,6 +1267,7 @@ namespace Marx
             this.tb_t_title.Location = new System.Drawing.Point(536, 151);
             this.tb_t_title.Name = "tb_t_title";
             this.tb_t_title.PreventEnterBeep = true;
+            this.tb_t_title.ReadOnly = true;
             this.tb_t_title.Size = new System.Drawing.Size(138, 20);
             this.tb_t_title.TabIndex = 17;
             // 
@@ -1272,6 +1284,7 @@ namespace Marx
             this.tb_t_zhiwu.Location = new System.Drawing.Point(536, 122);
             this.tb_t_zhiwu.Name = "tb_t_zhiwu";
             this.tb_t_zhiwu.PreventEnterBeep = true;
+            this.tb_t_zhiwu.ReadOnly = true;
             this.tb_t_zhiwu.Size = new System.Drawing.Size(138, 20);
             this.tb_t_zhiwu.TabIndex = 14;
             // 
@@ -1288,6 +1301,7 @@ namespace Marx
             this.tb_t_nation.Location = new System.Drawing.Point(536, 93);
             this.tb_t_nation.Name = "tb_t_nation";
             this.tb_t_nation.PreventEnterBeep = true;
+            this.tb_t_nation.ReadOnly = true;
             this.tb_t_nation.Size = new System.Drawing.Size(138, 20);
             this.tb_t_nation.TabIndex = 11;
             // 
@@ -1304,6 +1318,7 @@ namespace Marx
             this.tb_t_gender.Location = new System.Drawing.Point(536, 64);
             this.tb_t_gender.Name = "tb_t_gender";
             this.tb_t_gender.PreventEnterBeep = true;
+            this.tb_t_gender.ReadOnly = true;
             this.tb_t_gender.Size = new System.Drawing.Size(138, 20);
             this.tb_t_gender.TabIndex = 8;
             // 
@@ -1320,6 +1335,7 @@ namespace Marx
             this.tb_t_endSchool.Location = new System.Drawing.Point(1103, 383);
             this.tb_t_endSchool.Name = "tb_t_endSchool";
             this.tb_t_endSchool.PreventEnterBeep = true;
+            this.tb_t_endSchool.ReadOnly = true;
             this.tb_t_endSchool.Size = new System.Drawing.Size(294, 20);
             this.tb_t_endSchool.TabIndex = 34;
             // 
@@ -1336,6 +1352,7 @@ namespace Marx
             this.tb_t_hunyin.Location = new System.Drawing.Point(1147, 151);
             this.tb_t_hunyin.Name = "tb_t_hunyin";
             this.tb_t_hunyin.PreventEnterBeep = true;
+            this.tb_t_hunyin.ReadOnly = true;
             this.tb_t_hunyin.Size = new System.Drawing.Size(250, 20);
             this.tb_t_hunyin.TabIndex = 19;
             // 
@@ -1352,6 +1369,7 @@ namespace Marx
             this.tb_t_endDegree.Location = new System.Drawing.Point(708, 383);
             this.tb_t_endDegree.Name = "tb_t_endDegree";
             this.tb_t_endDegree.PreventEnterBeep = true;
+            this.tb_t_endDegree.ReadOnly = true;
             this.tb_t_endDegree.Size = new System.Drawing.Size(93, 20);
             this.tb_t_endDegree.TabIndex = 32;
             // 
@@ -1368,6 +1386,7 @@ namespace Marx
             this.tb_t_inischool.Location = new System.Drawing.Point(1103, 355);
             this.tb_t_inischool.Name = "tb_t_inischool";
             this.tb_t_inischool.PreventEnterBeep = true;
+            this.tb_t_inischool.ReadOnly = true;
             this.tb_t_inischool.Size = new System.Drawing.Size(294, 20);
             this.tb_t_inischool.TabIndex = 30;
             // 
@@ -1384,6 +1403,7 @@ namespace Marx
             this.tb_t_endxueli.Location = new System.Drawing.Point(536, 383);
             this.tb_t_endxueli.Name = "tb_t_endxueli";
             this.tb_t_endxueli.PreventEnterBeep = true;
+            this.tb_t_endxueli.ReadOnly = true;
             this.tb_t_endxueli.Size = new System.Drawing.Size(93, 20);
             this.tb_t_endxueli.TabIndex = 31;
             // 
@@ -1400,6 +1420,7 @@ namespace Marx
             this.tb_t_workLength.Location = new System.Drawing.Point(769, 323);
             this.tb_t_workLength.Name = "tb_t_workLength";
             this.tb_t_workLength.PreventEnterBeep = true;
+            this.tb_t_workLength.ReadOnly = true;
             this.tb_t_workLength.Size = new System.Drawing.Size(93, 20);
             this.tb_t_workLength.TabIndex = 26;
             // 
@@ -1416,6 +1437,7 @@ namespace Marx
             this.tb_t_iniDegree.Location = new System.Drawing.Point(708, 355);
             this.tb_t_iniDegree.Name = "tb_t_iniDegree";
             this.tb_t_iniDegree.PreventEnterBeep = true;
+            this.tb_t_iniDegree.ReadOnly = true;
             this.tb_t_iniDegree.Size = new System.Drawing.Size(93, 20);
             this.tb_t_iniDegree.TabIndex = 28;
             // 
@@ -1432,6 +1454,7 @@ namespace Marx
             this.tb_t_inixueli.Location = new System.Drawing.Point(536, 355);
             this.tb_t_inixueli.Name = "tb_t_inixueli";
             this.tb_t_inixueli.PreventEnterBeep = true;
+            this.tb_t_inixueli.ReadOnly = true;
             this.tb_t_inixueli.Size = new System.Drawing.Size(93, 20);
             this.tb_t_inixueli.TabIndex = 27;
             // 
@@ -1448,6 +1471,7 @@ namespace Marx
             this.tb_t_email.Location = new System.Drawing.Point(789, 151);
             this.tb_t_email.Name = "tb_t_email";
             this.tb_t_email.PreventEnterBeep = true;
+            this.tb_t_email.ReadOnly = true;
             this.tb_t_email.Size = new System.Drawing.Size(250, 20);
             this.tb_t_email.TabIndex = 18;
             // 
@@ -1464,6 +1488,7 @@ namespace Marx
             this.tb_t_zzmm.Location = new System.Drawing.Point(789, 122);
             this.tb_t_zzmm.Name = "tb_t_zzmm";
             this.tb_t_zzmm.PreventEnterBeep = true;
+            this.tb_t_zzmm.ReadOnly = true;
             this.tb_t_zzmm.Size = new System.Drawing.Size(250, 20);
             this.tb_t_zzmm.TabIndex = 15;
             // 
@@ -1480,11 +1505,13 @@ namespace Marx
             this.tb_t_familyMember.Location = new System.Drawing.Point(536, 291);
             this.tb_t_familyMember.Name = "tb_t_familyMember";
             this.tb_t_familyMember.PreventEnterBeep = true;
+            this.tb_t_familyMember.ReadOnly = true;
             this.tb_t_familyMember.Size = new System.Drawing.Size(861, 20);
             this.tb_t_familyMember.TabIndex = 24;
             // 
             // labelX33
             // 
+            this.labelX33.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
             // 
@@ -1508,6 +1535,7 @@ namespace Marx
             this.tb_t_researchArea.Location = new System.Drawing.Point(536, 264);
             this.tb_t_researchArea.Name = "tb_t_researchArea";
             this.tb_t_researchArea.PreventEnterBeep = true;
+            this.tb_t_researchArea.ReadOnly = true;
             this.tb_t_researchArea.Size = new System.Drawing.Size(861, 20);
             this.tb_t_researchArea.TabIndex = 23;
             // 
@@ -1524,6 +1552,7 @@ namespace Marx
             this.tb_t_subject.Location = new System.Drawing.Point(536, 236);
             this.tb_t_subject.Name = "tb_t_subject";
             this.tb_t_subject.PreventEnterBeep = true;
+            this.tb_t_subject.ReadOnly = true;
             this.tb_t_subject.Size = new System.Drawing.Size(861, 20);
             this.tb_t_subject.TabIndex = 22;
             // 
@@ -1540,6 +1569,7 @@ namespace Marx
             this.tb_t_hukouaddress.Location = new System.Drawing.Point(536, 208);
             this.tb_t_hukouaddress.Name = "tb_t_hukouaddress";
             this.tb_t_hukouaddress.PreventEnterBeep = true;
+            this.tb_t_hukouaddress.ReadOnly = true;
             this.tb_t_hukouaddress.Size = new System.Drawing.Size(861, 20);
             this.tb_t_hukouaddress.TabIndex = 21;
             // 
@@ -1556,6 +1586,7 @@ namespace Marx
             this.tb_t_homeAddress.Location = new System.Drawing.Point(536, 180);
             this.tb_t_homeAddress.Name = "tb_t_homeAddress";
             this.tb_t_homeAddress.PreventEnterBeep = true;
+            this.tb_t_homeAddress.ReadOnly = true;
             this.tb_t_homeAddress.Size = new System.Drawing.Size(861, 20);
             this.tb_t_homeAddress.TabIndex = 20;
             // 
@@ -1572,6 +1603,7 @@ namespace Marx
             this.tb_t_jiaoyanshi.Location = new System.Drawing.Point(1147, 64);
             this.tb_t_jiaoyanshi.Name = "tb_t_jiaoyanshi";
             this.tb_t_jiaoyanshi.PreventEnterBeep = true;
+            this.tb_t_jiaoyanshi.ReadOnly = true;
             this.tb_t_jiaoyanshi.Size = new System.Drawing.Size(250, 20);
             this.tb_t_jiaoyanshi.TabIndex = 10;
             // 
@@ -1588,6 +1620,7 @@ namespace Marx
             this.tb_t_idcard.Location = new System.Drawing.Point(789, 64);
             this.tb_t_idcard.Name = "tb_t_idcard";
             this.tb_t_idcard.PreventEnterBeep = true;
+            this.tb_t_idcard.ReadOnly = true;
             this.tb_t_idcard.Size = new System.Drawing.Size(250, 20);
             this.tb_t_idcard.TabIndex = 9;
             // 
@@ -1604,6 +1637,7 @@ namespace Marx
             this.tb_t_phone.Location = new System.Drawing.Point(1147, 35);
             this.tb_t_phone.Name = "tb_t_phone";
             this.tb_t_phone.PreventEnterBeep = true;
+            this.tb_t_phone.ReadOnly = true;
             this.tb_t_phone.Size = new System.Drawing.Size(250, 20);
             this.tb_t_phone.TabIndex = 7;
             // 
@@ -1620,6 +1654,7 @@ namespace Marx
             this.tb_t_xm.Location = new System.Drawing.Point(536, 35);
             this.tb_t_xm.Name = "tb_t_xm";
             this.tb_t_xm.PreventEnterBeep = true;
+            this.tb_t_xm.ReadOnly = true;
             this.tb_t_xm.Size = new System.Drawing.Size(138, 20);
             this.tb_t_xm.TabIndex = 5;
             // 
@@ -1636,6 +1671,7 @@ namespace Marx
             this.tb_t_gzz.Location = new System.Drawing.Point(789, 35);
             this.tb_t_gzz.Name = "tb_t_gzz";
             this.tb_t_gzz.PreventEnterBeep = true;
+            this.tb_t_gzz.ReadOnly = true;
             this.tb_t_gzz.Size = new System.Drawing.Size(250, 20);
             this.tb_t_gzz.TabIndex = 6;
             // 
@@ -2035,34 +2071,6 @@ namespace Marx
             this.superTabItem1.GlobalItem = false;
             this.superTabItem1.Name = "superTabItem1";
             this.superTabItem1.Text = "信息检索";
-            // 
-            // superTabControlPanel4
-            // 
-            this.superTabControlPanel4.Controls.Add(this.axdoc_main);
-            this.superTabControlPanel4.Controls.Add(this.button1);
-            this.superTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel4.Location = new System.Drawing.Point(0, 26);
-            this.superTabControlPanel4.Name = "superTabControlPanel4";
-            this.superTabControlPanel4.Size = new System.Drawing.Size(1422, 718);
-            this.superTabControlPanel4.TabIndex = 0;
-            this.superTabControlPanel4.TabItem = this.superTabItem4;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(100, 120);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(114, 53);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // superTabItem4
-            // 
-            this.superTabItem4.AttachedControl = this.superTabControlPanel4;
-            this.superTabItem4.GlobalItem = false;
-            this.superTabItem4.Name = "superTabItem4";
-            this.superTabItem4.Text = "superTabItem4";
             // 
             // superTabControlPanel2
             // 
@@ -3353,6 +3361,46 @@ namespace Marx
             this.superTabItem2.Name = "superTabItem2";
             this.superTabItem2.Text = "信息录入";
             // 
+            // superTabControlPanel4
+            // 
+            this.superTabControlPanel4.Controls.Add(this.axdoc_main);
+            this.superTabControlPanel4.Controls.Add(this.button1);
+            this.superTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel4.Location = new System.Drawing.Point(0, 26);
+            this.superTabControlPanel4.Name = "superTabControlPanel4";
+            this.superTabControlPanel4.Size = new System.Drawing.Size(1422, 718);
+            this.superTabControlPanel4.TabIndex = 0;
+            this.superTabControlPanel4.TabItem = this.superTabItem4;
+            // 
+            // axdoc_main
+            // 
+            this.axdoc_main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.axdoc_main.Enabled = true;
+            this.axdoc_main.Location = new System.Drawing.Point(422, 0);
+            this.axdoc_main.Name = "axdoc_main";
+            this.axdoc_main.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axdoc_main.OcxState")));
+            this.axdoc_main.Size = new System.Drawing.Size(1000, 712);
+            this.axdoc_main.TabIndex = 37;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(100, 120);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(114, 53);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // superTabItem4
+            // 
+            this.superTabItem4.AttachedControl = this.superTabControlPanel4;
+            this.superTabItem4.GlobalItem = false;
+            this.superTabItem4.Name = "superTabItem4";
+            this.superTabItem4.Text = "superTabItem4";
+            // 
             // superTabControlPanel3
             // 
             this.superTabControlPanel3.Controls.Add(this.groupPanel4);
@@ -3510,17 +3558,20 @@ namespace Marx
             // 
             this.opf_picture.Filter = "图片|*.bmp;*.jpg;*.png;*.jpeg;*.JPG;*.PNG;*.BMP;*.JPEG|所有文件|*.*\"";
             // 
-            // axdoc_main
+            // btx_export
             // 
-            this.axdoc_main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.axdoc_main.Enabled = true;
-            this.axdoc_main.Location = new System.Drawing.Point(422, 0);
-            this.axdoc_main.Name = "axdoc_main";
-            this.axdoc_main.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axdoc_main.OcxState")));
-            this.axdoc_main.Size = new System.Drawing.Size(1000, 712);
-            this.axdoc_main.TabIndex = 37;
+            this.btx_export.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btx_export.Location = new System.Drawing.Point(1115, 455);
+            this.btx_export.Name = "btx_export";
+            this.btx_export.Size = new System.Drawing.Size(214, 66);
+            this.btx_export.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btx_export.TabIndex = 36;
+            this.btx_export.Text = "导出简历";
+            this.btx_export.Click += new System.EventHandler(this.btx_export_Click);
+            // 
+            // sfd_main
+            // 
+            this.sfd_main.Filter = "Word文件|*.docx";
             // 
             // F_main
             // 
@@ -3542,7 +3593,6 @@ namespace Marx
             ((System.ComponentModel.ISupportInitialize)(this.dgv_qresult)).EndInit();
             this.cms_dgvAction.ResumeLayout(false);
             this.groupPanel1.ResumeLayout(false);
-            this.superTabControlPanel4.ResumeLayout(false);
             this.superTabControlPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pb_luru)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_initime)).EndInit();
@@ -3550,16 +3600,18 @@ namespace Marx
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_schooltime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_worktime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp_i_birthday)).EndInit();
+            this.superTabControlPanel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.axdoc_main)).EndInit();
             this.superTabControlPanel3.ResumeLayout(false);
             this.groupPanel4.ResumeLayout(false);
             this.groupPanel3.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axdoc_main)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+        #endregion
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -3568,6 +3620,26 @@ namespace Marx
             //this.axFramerControl1
             this.axdoc_main.Open(Application.StartupPath + @"\dll\jianli.docx");
             //this.axFramerControl1.Open(oDoc);
+        }
+
+        private void btx_export_Click(object sender, EventArgs e)
+        {
+            if(tb_t_idcard.Text.Trim()== string.Empty)
+            {
+                return;
+            }
+            sql = @"SELECT id,tid,name,gender,nation,birthday,idcard,politicalStatus
+                      ,email,phone,researchSection,duty,title,homeAddress,residenceAddress
+                      ,workStrartDate,schoolStartDate,subject,rearchArea,civilState
+                      ,familyMembers,tutorOfPhD,initDegree,initEducation,intiDate
+                      ,initSchool,lastDegree,lastEducation,lastDate,lastSchool,photo
+                  FROM tb_basicInfo where idcard='" + tb_t_idcard.Text.Trim() + "'";
+            DataRow dr = SQLHELPER.ExecuteDataRow(sql);
+            sfd_main.FileName =tb_t_xm.Text+ ".docx";
+            sfd_main.ShowDialog();
+            if (sfd_main.FileName == string.Empty)
+                return;
+            Utils.WordTools.Create(pathDocTemplate, sfd_main.FileName, dr);
         }
     }
 }
